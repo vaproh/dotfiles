@@ -2,9 +2,9 @@
 
 set -euo pipefail
 
-SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+SOURCE_DIR="${CHEZMOI_SOURCE_DIR:-$(chezmoi source-path)}"
 
-source "$SCRIPT_DIR/../.chezmoi_lib/lib.sh"
+source "$SOURCE_DIR/.chezmoi_lib/lib.sh"
 
 header "Bootstrap Complete"
 

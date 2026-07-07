@@ -2,18 +2,18 @@
 
 set -euo pipefail
 
-SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+SOURCE_DIR="${CHEZMOI_SOURCE_DIR:-$(chezmoi source-path)}"
 
-source "$SCRIPT_DIR/../.chezmoi_lib/lib.sh"
+source "$SOURCE_DIR/.chezmoi_lib/lib.sh"
 
 header "Optional Components"
 
 OPTIONAL_SCRIPTS=(
-    "Development|../.chezmoi_optional/install-development.sh"
-    "Docker|../.chezmoi_optional/install-docker.sh"
-    "Gaming|../.chezmoi_optional/install-gaming.sh"
-    "Laptop|../.chezmoi_optional/install-laptop.sh"
-    "Neovim Config|../.chezmoi_optional/install-nvim.sh"
+    "Development|install-development.sh"
+    "Docker|install-docker.sh"
+    "Gaming|install-gaming.sh"
+    "Laptop|install-laptop.sh"
+    "Neovim Config|install-nvim.sh"
 )
 
 for item in "${OPTIONAL_SCRIPTS[@]}"; do
@@ -24,7 +24,7 @@ for item in "${OPTIONAL_SCRIPTS[@]}"; do
 
         section "$name"
 
-        bash "$SCRIPT_DIR/$script"
+        bash "$SOURCE_DIR/.chezmoi_optional/$(basename "$script")"
 
     else
 
