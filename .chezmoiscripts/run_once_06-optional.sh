@@ -4,16 +4,16 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 
-source "$SCRIPT_DIR/scripts/lib.sh"
+source "$SCRIPT_DIR/../.chezmoi_lib/lib.sh"
 
 header "Optional Components"
 
 OPTIONAL_SCRIPTS=(
-    "Development|optional/install-development.sh"
-    "Docker|optional/install-docker.sh"
-    "Gaming|optional/install-gaming.sh"
-    "Laptop|optional/install-laptop.sh"
-    "Neovim Config|optional/install-neovim.sh"
+    "Development|../.chezmoi_optional/install-development.sh"
+    "Docker|../.chezmoi_optional/install-docker.sh"
+    "Gaming|../.chezmoi_optional/install-gaming.sh"
+    "Laptop|../.chezmoi_optional/install-laptop.sh"
+    "Neovim Config|../.chezmoi_optional/install-nvim.sh"
 )
 
 for item in "${OPTIONAL_SCRIPTS[@]}"; do

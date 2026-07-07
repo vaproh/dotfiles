@@ -4,7 +4,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 
-source "$SCRIPT_DIR/scripts/lib.sh"
+source "$SCRIPT_DIR/../.chezmoi_lib/lib.sh"
 
 header "Bootstrap Complete"
 
@@ -20,6 +20,7 @@ success "Fonts installed"
 success "Oh My Zsh installed"
 success "Services configured"
 success "Yazi plugins installed"
+success "Tmux plugins installed"
 
 divider
 

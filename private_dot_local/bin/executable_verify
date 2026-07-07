@@ -2,9 +2,60 @@
 
 set -uo pipefail
 
-SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+# ==========================
+# Colors (embedded for standalone use)
+# ==========================
 
-source "$SCRIPT_DIR/scripts/lib.sh"
+RESET='\033[0m'
+BOLD='\033[1m'
+DIM='\033[2m'
+
+BLACK='\033[30m'
+RED='\033[31m'
+GREEN='\033[32m'
+YELLOW='\033[33m'
+BLUE='\033[34m'
+MAGENTA='\033[35m'
+CYAN='\033[36m'
+WHITE='\033[37m'
+GRAY='\033[90m'
+
+# ==========================
+# Logging (embedded)
+# ==========================
+
+header() {
+    printf "\n${BOLD}${CYAN}"
+    printf "╔══════════════════════════════════════════════════════╗\n"
+    printf "║ %-52s ║\n" "$1"
+    printf "╚══════════════════════════════════════════════════════╝\n"
+    printf "${RESET}\n"
+}
+
+section() {
+    printf "\n${BOLD}${MAGENTA}%s${RESET}\n" "$1"
+    printf "${MAGENTA}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}\n"
+}
+
+success() {
+    printf "${GREEN}[✓]${RESET} %s\n" "$1"
+}
+
+warn() {
+    printf "${YELLOW}[!]${RESET} %s\n" "$1"
+}
+
+divider() {
+    printf "${DIM}──────────────────────────────────────────────────────${RESET}\n"
+}
+
+command_exists() {
+    command -v "$1" >/dev/null 2>&1
+}
+
+# ==========================
+# Verification
+# ==========================
 
 PASS=0
 FAIL=0

@@ -4,8 +4,8 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 
-source "$SCRIPT_DIR/scripts/lib.sh"
-source "$SCRIPT_DIR/scripts/services.sh"
+source "$SCRIPT_DIR/../.chezmoi_lib/lib.sh"
+source "$SCRIPT_DIR/../.chezmoi_lib/services.sh"
 
 SYSTEM_SERVICES=(
     NetworkManager
