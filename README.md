@@ -16,29 +16,43 @@ Arch Linux + Hyprland (Wayland) configuration managed with [chezmoi](https://www
 
 - Fresh Arch Linux installation
 - Internet connection
-- Git (will be installed by the bootstrap script if missing)
+- `git` and `base-devel` (will be installed by the bootstrap script if missing)
 
 ## Fresh Install
 
+### Option 1: One-liner (recommended)
+
 ```bash
-# Install chezmoi and initialize dotfiles
+curl -fsLS https://get.chezmoi.io | sh; chezmoi init --apply vaproh
+```
+
+### Option 2: Step by step
+
+```bash
+# 1. Install chezmoi
 curl -fsLS https://get.chezmoi.io | sh
+
+# 2. Initialize dotfiles from GitHub
 chezmoi init --apply vaproh
 ```
 
-This will execute the following scripts in order:
+### What happens during install
 
-| Script | Description |
-|--------|-------------|
-| `run_once_00-install-yay.sh` | Install yay (AUR helper) |
-| `run_once_01-install-packages.sh` | Install all packages (~240 packages) |
-| `run_once_02-install-fonts.sh` | Install fonts (~20 packages) |
-| `run_once_03-install-ohmyzsh.sh` | Install Oh My Zsh + plugins |
-| `run_once_04-enable-services.sh` | Enable services (NetworkManager, Pipewire, WirePlumber) |
-| `run_once_05-install-yazi-plugins.sh` | Install Yazi plugins |
-| `run_once_06-optional.sh` | Interactive menu for optional components |
-| `run_once_07-install-tmux-plugins.sh` | Install TPM + Tmux plugins |
-| `run_once_08-post-install.sh` | Post-install summary and instructions |
+chezmoi will clone this repository and execute scripts in order:
+
+| # | Script | Description |
+|---|--------|-------------|
+| 0 | `run_once_00-install-yay.sh` | Install yay (AUR helper) |
+| 1 | `run_once_01-install-packages.sh` | Install all packages (~240 packages) |
+| 2 | `run_once_02-install-fonts.sh` | Install fonts (~20 packages) |
+| 3 | `run_once_03-install-ohmyzsh.sh` | Install Oh My Zsh + plugins |
+| 4 | `run_once_04-enable-services.sh` | Enable services (NetworkManager, PipeWire, WirePlumber) |
+| 5 | `run_once_05-install-yazi-plugins.sh` | Install Yazi plugins |
+| 6 | `run_once_06-optional.sh` | Interactive menu for optional components |
+| 7 | `run_once_07-install-tmux-plugins.sh` | Install TPM + Tmux plugins |
+| 8 | `run_once_08-post-install.sh` | Post-install summary and reboot prompt |
+
+> **Note:** Scripts with `run_once_` prefix only execute once per unique content version. To re-run them, see [Troubleshooting](#reset-script-state).
 
 ## Optional Components
 
@@ -114,7 +128,7 @@ bash .chezmoiscripts/run_once_06-optional.sh
 ## Updating
 
 ```bash
-# Pull latest changes and apply
+# Pull latest changes and apply (recommended)
 chezmoi update
 
 # Or manually
@@ -122,6 +136,8 @@ chezmoi cd
 git pull
 chezmoi apply
 ```
+
+> **Note:** `run_once_` scripts will not re-execute unless their content changes. See [Troubleshooting](#reset-script-state) to force re-run.
 
 ## Verifying
 
@@ -194,10 +210,10 @@ chezmoi apply --verbose
 
 ### Reset script state
 
-To re-run `run_once_` scripts:
+To re-run `run_once_` scripts (e.g., after adding new packages):
 
 ```bash
-# Clear script state
+# Clear all script state
 chezmoi state delete-bucket --bucket=scriptState
 
 # Then apply again
@@ -218,6 +234,18 @@ If you need to run a specific script:
 ```bash
 chezmoi cd
 bash .chezmoiscripts/run_once_01-install-packages.sh
+```
+
+### Fresh start
+
+To completely reset and start over:
+
+```bash
+# Remove chezmoi state
+chezmoi purge
+
+# Re-run init
+curl -fsLS https://get.chezmoi.io | sh; chezmoi init --apply vaproh
 ```
 
 ## Credits
