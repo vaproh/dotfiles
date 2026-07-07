@@ -1,0 +1,18 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "lsp": {
+    "basedpyright": {
+      "command": ["basedpyright-langserver", "--stdio"],
+      "extensions": [".py"],
+      "priority": 100,
+    },
+    "ruff": {
+      "command": ["ruff", "server"],
+      "extensions": [".py"],
+      "priority": 90,
+    },
+    "pyright": {
+      "disabled": true,
+    },
+  },
+}

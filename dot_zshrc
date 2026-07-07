@@ -1,0 +1,210 @@
+# ==============================================================================
+# Environment
+# ==============================================================================
+
+export ZSH="$HOME/.oh-my-zsh"
+
+export EDITOR="nvim"
+export QT_QPA_PLATFORMTHEME="qt6ct"
+
+# PATH
+export PATH="$HOME/.local/bin/scripts:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+
+# ==============================================================================
+# Prompt
+# ==============================================================================
+
+# ZSH_THEME="minimal"
+eval "$(starship init zsh)"
+
+# ==============================================================================
+# Oh My Zsh
+# ==============================================================================
+
+plugins=(
+    git
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+    you-should-use
+    fzf-zsh-plugin
+    fzf-tab
+)
+
+source "$ZSH/oh-my-zsh.sh"
+
+# ==============================================================================
+# Shell Integrations
+# ==============================================================================
+
+# zoxide
+eval "$(zoxide init zsh)"
+
+# yazi
+y() {
+    local tmp cwd
+
+    tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+
+    yazi "$@" --cwd-file="$tmp"
+
+    IFS= read -r -d '' cwd < "$tmp"
+
+    [[ -n "$cwd" && "$cwd" != "$PWD" ]] && builtin cd -- "$cwd"
+
+    rm -f "$tmp"
+}
+
+# ==============================================================================
+# Aliases - File Management
+# ==============================================================================
+
+alias ls='exa --icons --color=always --group-directories-first'
+alias ll='exa -alF --icons --color=always --group-directories-first'
+alias la='exa -a --icons --color=always --group-directories-first'
+alias l='exa -F --icons --color=always --group-directories-first'
+alias l1='exa -1 --icons --color=always --group-directories-first'
+alias l.='exa -a | egrep "^\."'
+
+alias ccat='bat --color=auto'
+
+# ==============================================================================
+# Aliases - Pacman
+# ==============================================================================
+
+alias install='sudo pacman -S'
+alias uninstall='sudo pacman -Rns'
+alias upgrade='sudo pacman -Syu'
+alias search='sudo pacman -Ss'
+
+alias update-mirrors='sudo reflector --country India --age 12 --sort rate --save /etc/pacman.d/mirrorlist'
+
+# ==============================================================================
+# Aliases - yt-dlp
+# ==============================================================================
+
+alias ytdl='yt-dlp -f best -o "%(title)s.%(ext)s"'
+alias ytbdl='yt-dlp -f bestvideo+bestaudio -o "%(title)s.%(ext)s"'
+alias ytmdl='yt-dlp -x -f bestaudio -o "%(title)s.%(ext)s"'
+alias ytpdl='yt-dlp -f best -o "%(playlist_index)s. %(title)s.%(ext)s"'
+
+# ==============================================================================
+# TMUX Helpers
+# ==============================================================================
+
+tmx() {
+    local name
+
+    read "name?Session name (leave blank for no name): "
+
+    if [[ -z "$name" ]]; then
+        tmux
+        return
+    fi
+
+    if tmux has-session -t "$name" 2>/dev/null; then
+        if [[ -n "$TMUX" ]]; then
+            tmux switch-client -t "$name"
+        else
+            tmux attach-session -t "$name"
+        fi
+    else
+        tmux new-session -s "$name"
+    fi
+}
+
+tmxa() {
+    local session
+
+    session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --prompt="Session > ") || return
+
+    if [[ -n "$TMUX" ]]; then
+        tmux switch-client -t "$session"
+    else
+        tmux attach-session -t "$session"
+    fi
+}
+
+tmxk() {
+    local session
+
+    session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | \
+        fzf --prompt="Kill session > ") || return
+
+    tmux kill-session -t "$session"
+
+    print "✓ Killed $session"
+}
+
+tmxr() {
+    local dir="$HOME/.local/share/tmux/resurrect"
+    local snapshot
+
+    snapshot=$(
+        cd "$dir" || exit
+        find . -maxdepth 1 -type f -name '*.txt' ! -name 'last' |
+        sed 's|^\./||' |
+        sort -r |
+        fzf \
+            --prompt="Restore snapshot > " \
+            --preview '
+                echo "=== Sessions ==="
+                grep "^session" "'$dir'"/{} | cut -d" " -f2
+
+                echo
+                echo "=== Windows ==="
+                grep "^window" "'$dir'"/{} | cut -d" " -f3 | sort -u
+            ' \
+            --preview-window=right:50%
+    ) || return
+
+    cp "$dir/$snapshot" "$dir/last"
+
+    if ! tmux info >/dev/null 2>&1; then
+        tmux new-session -d
+    fi
+
+    ~/.tmux/plugins/tmux-resurrect/scripts/restore.sh
+}
+
+dev() {
+    local name
+
+    read "name?Project name: "
+    [[ -z "$name" ]] && return
+
+    # Attach if it already exists
+    if tmux has-session -t "$name" 2>/dev/null; then
+        if [[ -n "$TMUX" ]]; then
+            tmux switch-client -t "$name"
+        else
+            tmux attach-session -t "$name"
+        fi
+        return
+    fi
+
+    # Create session in the current directory
+    tmux new-session -d -s "$name" -c "$PWD"
+
+    # Window 1: Editor
+    tmux rename-window -t "$name:1" "editor"
+    tmux send-keys -t "$name:1" "nvim" C-m
+
+    # Window 2: AI
+    tmux new-window -t "$name" -n "ai" -c "$PWD"
+    tmux send-keys -t "$name:2" "opencode" C-m
+
+    # Window 3: Terminal
+    tmux new-window -t "$name" -n "term" -c "$PWD"
+
+    # Return to editor
+    tmux select-window -t "$name:1"
+
+    # Attach/switch
+    if [[ -n "$TMUX" ]]; then
+        tmux switch-client -t "$name"
+    else
+        tmux attach-session -t "$name"
+    fi
+}
+

@@ -1,0 +1,102 @@
+@import url('file:///home/vaproh/.config/wofi/themes/kanagawa-dragon.css');
+
+* {
+    font-family: "Inter";
+    font-size: 14px;
+    outline: none;
+    border: none;
+}
+
+window {
+    background: @background;
+    border: 1px solid alpha(@color4, 0.45);
+    border-radius: 20px;
+    color: @foreground;
+}
+
+#outer-box {
+    margin: 16px;
+}
+
+#input {
+    background: @color0;
+    color: @foreground;
+
+    border: 1px solid alpha(@color4, 0.22);
+    border-radius: 14px;
+
+    padding: 14px 16px;
+    margin-bottom: 14px;
+}
+
+#input:focus {
+    border-color: alpha(@color4, 0.75);
+}
+
+#scroll {
+    margin: 0;
+    padding: 0;
+}
+
+#inner-box {
+    background: @color0;
+
+    border: 1px solid alpha(@color4, 0.12);
+    border-radius: 16px;
+
+    padding: 6px;
+}
+
+#entry {
+    background: transparent;
+
+    border: 1px solid transparent;
+    border-radius: 12px;
+
+    padding: 12px 14px;
+    margin: 4px 0;
+}
+
+#entry:hover {
+    background: alpha(@color4, 0.08);
+}
+
+#entry:selected {
+    background: alpha(@color4, 0.18);
+
+    border: 1px solid alpha(@color4, 0.35);
+
+    box-shadow: inset 3px 0 0 @color4;
+}
+
+#entry:selected #text {
+    color: @color14;
+}
+
+#entry image {
+    margin-right: 14px;
+
+    min-width: 32px;
+    min-height: 32px;
+}
+
+#text {
+    color: @foreground;
+    margin: 0 4px;
+}
+
+#text:selected {
+    color: @color14;
+}
+
+scrollbar {
+    background: transparent;
+}
+
+scrollbar slider {
+    background: alpha(@color4, 0.35);
+    border-radius: 999px;
+
+    min-width: 6px;
+    min-height: 6px;
+}

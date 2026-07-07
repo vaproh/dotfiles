@@ -1,0 +1,44 @@
+#!/bin/bash
+
+show_help() {
+    echo "CPU Mode Switcher"
+    echo
+    echo "Usage:"
+    echo "  cpu-mode perf         Set governor to performance"
+    echo "  cpu-mode balanced     Set governor to schedutil"
+    echo "  cpu-mode save         Set governor to powersave"
+    echo "  cpu-mode status       Show current governor"
+    echo "  cpu-mode help         Show this help message"
+    echo
+    echo "Aliases:"
+    echo "  performance  -> perf"
+    echo "  schedutil    -> balanced"
+    echo "  powersave    -> save"
+}
+
+case "$1" in
+    perf|performance)
+        sudo cpupower frequency-set -g performance
+        echo "🚀 CPU governor set to PERFORMANCE"
+        ;;
+    balanced|schedutil)
+        sudo cpupower frequency-set -g schedutil
+        echo "⚖️ CPU governor set to SCHEDUTIL"
+        ;;
+    save|powersave)
+        sudo cpupower frequency-set -g powersave
+        echo "🔋 CPU governor set to POWERSAVE"
+        ;;
+    status)
+        cpupower frequency-info | grep governor
+        ;;
+    help|-h|--help|"")
+        show_help
+        ;;
+    *)
+        echo "❌ Unknown option: $1"
+        echo
+        show_help
+        exit 1
+        ;;
+esac

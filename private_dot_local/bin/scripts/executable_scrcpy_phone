@@ -1,0 +1,48 @@
+#!/bin/bash
+
+DEVICE=$(
+    adb devices | awk '
+    NR > 1 && $2 == "device" {
+        if ($1 ~ /:/)
+            print "📶 WiFi  " $1
+        else
+            print "🔌 USB   " $1
+    }' | wofi --dmenu -p "Select Device"
+)
+
+[ -z "$DEVICE" ] && exit 0
+
+DEVICE=$(echo "$DEVICE" | awk '{print $NF}')
+
+QUALITY=$(
+    printf "Balanced\nHigh\nUltra\nLow" |
+    wofi --dmenu -p "Quality"
+)
+
+[ -z "$QUALITY" ] && exit 0
+
+COMMON_ARGS="--stay-awake --turn-screen-off"
+
+case "$QUALITY" in
+    Low)
+        ARGS="--max-size=1280 --video-bit-rate=4M --max-fps=30"
+        ;;
+    Balanced)
+        ARGS="--max-size=1920 --video-bit-rate=8M --max-fps=60"
+        ;;
+    High)
+        ARGS="--video-bit-rate=15M --max-fps=60"
+        ;;
+    Ultra)
+        ARGS="--video-bit-rate=30M --max-fps=120"
+        ;;
+    *)
+        exit 1
+        ;;
+esac
+
+setsid scrcpy \
+    -s "$DEVICE" \
+    $COMMON_ARGS \
+    $ARGS \
+    >/dev/null 2>&1 &

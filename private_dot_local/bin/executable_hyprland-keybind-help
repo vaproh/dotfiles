@@ -1,0 +1,121 @@
+#!/usr/bin/env bash
+
+# Hyprland Keybind Help Menu
+# Display all configured keybindings
+
+cat << 'EOF' | less
+
+════════════════════════════════════════════════════════════════════
+                    HYPRLAND KEYBIND HELP
+════════════════════════════════════════════════════════════════════
+
+LAUNCH
+──────────────────────────────────────────────────────────────────
+  Super + Return          → Open Terminal
+  Super + Space           → Open Application Menu
+  Super + P               → Power Menu
+  Super + V               → Clipboard History
+  Super + .               → Emoji Picker
+  Super + C               → Calculator
+  Super + D               → File Manager + zsh
+  Super + Shift + D       → Wallpaper Selector
+  Super + F2              → Scrcpy Phone
+
+IMPORTANT
+──────────────────────────────────────────────────────────────────
+  Super + Q               → Close Active Window
+  Super + Shift + Ctrl + Q → Exit Hyprland
+  Super + B               → Toggle Waybar
+  Super + A               → Change Theme
+  Super + Alt + Z         → Toggle Do Not Disturb
+  Super + Ctrl + Shift + N → Show Notifications
+  Super + Shift + F1      → This Help Menu
+
+WINDOW MANAGEMENT
+──────────────────────────────────────────────────────────────────
+  Super + Shift + Space   → Toggle Floating/Tiled
+  Super + Alt + Space     → Toggle All Float in Workspace
+  Super + O               → Pseudo Tile (dwindle)
+  Super + I               → Toggle Floating (dwindle)
+  Super + F               → Fullscreen
+  Super + Z               → Swap with Master Window
+
+OPACITY
+──────────────────────────────────────────────────────────────────
+  Super + \               → Toggle Active Window Opacity
+  Super + Shift + -       → Decrease Active Window Opacity
+  Super + Alt + =         → Increase Active Window Opacity
+  Super + Ctrl + 0        → Reset Active Window Opacity
+  Super + Home            → Toggle Active Window Opaque
+  Super + Shift + Home    → Toggle Global Transparency
+
+CURSOR
+──────────────────────────────────────────────────────────────────
+  Super + Shift + Z       → Cursor Zoom (hold to zoom, release to reset)
+
+FOCUS & MOVEMENT
+──────────────────────────────────────────────────────────────────
+  Super + H/L/K/J         → Move Focus (Vim: left/right/up/down)
+  Super + Arrow Keys      → Move Focus (Arrow keys)
+  Super + Shift + H/L/K/J → Resize Window (Vim)
+  Super + Shift + Arrows  → Resize Window (Arrows)
+  Super + Ctrl + H/L/K/J  → Move Window (Vim)
+  Super + Ctrl + Arrows   → Move Window (Arrows)
+
+WINDOW CYCLING
+──────────────────────────────────────────────────────────────────
+  Alt + Tab               → Cycle Windows in Workspace
+  Super + Tab             → Previous Workspace
+
+SPECIAL WORKSPACES (Scratchpad)
+──────────────────────────────────────────────────────────────────
+  Super + S               → Toggle Scratchpad
+  Super + Shift + S       → Move Window to Scratchpad
+  Super + X               → Toggle Magic Workspace
+
+SCREENSHOTS
+──────────────────────────────────────────────────────────────────
+  Super + Insert          → Capture Active Monitor
+  Super + Ctrl + Insert   → Capture Active Window
+  Super + Shift + Insert  → Capture Region
+  Super + Shift + Ctrl + Insert → Capture with Annotation (Satty)
+
+UTILITIES
+──────────────────────────────────────────────────────────────────
+  Super + Shift + P       → Color Picker (Hyprpicker)
+  Super + Ctrl + N        → Toggle Night Filter (Wlsunset)
+  Win + F1                → Powersave Mode (Disable Animations)
+
+WAYScriber
+──────────────────────────────────────────────────────────────────
+  Super + MouseBack       → Toggle Wayscriber Daemon
+  Super + Shift + MouseBack → Toggle Wayscriber Freeze
+  Super + Alt + MouseBack → Toggle Wayscriber Light Draw
+
+WORKSPACES
+──────────────────────────────────────────────────────────────────
+  Super + [1-9,0]         → Switch to Workspace 1-10
+  Super + Shift + [1-9,0] → Move Window to Workspace 1-10
+  Super + Scroll          → Switch Workspaces (with mouse)
+
+MOUSE
+──────────────────────────────────────────────────────────────────
+  Super + Left Drag       → Move Window
+  Super + Right Drag      → Resize Window
+
+MEDIA KEYS (Laptop)
+──────────────────────────────────────────────────────────────────
+  XF86AudioRaiseVolume    → Increase Volume
+  XF86AudioLowerVolume    → Decrease Volume
+  XF86AudioMute           → Toggle Mute
+  XF86AudioMicMute        → Toggle Mic Mute
+  XF86MonBrightnessUp     → Increase Brightness
+  XF86MonBrightnessDown   → Decrease Brightness
+  XF86AudioNext           → Next Track
+  XF86AudioPrev           → Previous Track
+  XF86AudioPlay/Pause     → Play/Pause
+
+════════════════════════════════════════════════════════════════════
+Press 'q' to close this help menu
+════════════════════════════════════════════════════════════════════
+EOF

@@ -1,0 +1,36 @@
+"$schema" = "https://starship.rs/config-schema.json"
+
+add_newline = false
+
+format = "$character"
+
+right_format = "$directory"
+
+[directory]
+format = "[$path](dimmed)"
+truncation_length = 3
+truncate_to_repo = false
+
+[character]
+success_symbol = "[λ](yellow) [›](dimmed)"
+error_symbol = "[λ](red) [›](dimmed)"
+
+vimcmd_symbol = "[λ](yellow) [·](dimmed)"
+vimcmd_visual_symbol = "[λ](yellow) [·](dimmed)"
+vimcmd_replace_symbol = "[λ](yellow) [·](dimmed)"
+vimcmd_replace_one_symbol = "[λ](yellow) [·](dimmed)"
+
+[git_branch]
+disabled = true
+
+[git_status]
+disabled = true
+
+[username]
+disabled = true
+
+[hostname]
+disabled = true
+
+[python]
+disabled = true

@@ -1,0 +1,203 @@
+#!/usr/bin/env bash
+
+set -uo pipefail
+
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+
+source "$SCRIPT_DIR/scripts/lib.sh"
+
+PASS=0
+FAIL=0
+
+check() {
+    local name="$1"
+    shift
+
+    printf "%-40s" "$name"
+
+    if "$@" >/dev/null 2>&1; then
+        printf "${GREEN}✓${RESET}\n"
+        ((PASS++))
+    else
+        printf "${RED}✗${RESET}\n"
+        ((FAIL++))
+    fi
+}
+
+header "System Verification"
+
+# --------------------------------------------------
+# Core Programs
+# --------------------------------------------------
+
+section "Core Programs"
+
+check "yay" command_exists yay
+check "chezmoi" command_exists chezmoi
+check "git" command_exists git
+check "zsh" command_exists zsh
+check "tmux" command_exists tmux
+check "kitty" command_exists kitty
+check "Hyprland" command_exists Hyprland
+check "Waybar" command_exists waybar
+check "Neovim" command_exists nvim
+check "Yazi" command_exists yazi
+
+divider
+
+# --------------------------------------------------
+# Fonts
+# --------------------------------------------------
+
+section "Fonts"
+
+check "Inter" fc-match Inter
+check "Maple Mono" fc-match "Maple Mono"
+check "Libertinus Serif" fc-match "Libertinus Serif"
+check "Noto Sans" fc-match "Noto Sans"
+
+divider
+
+# --------------------------------------------------
+# Services
+# --------------------------------------------------
+
+section "Services"
+
+check "NetworkManager Enabled" systemctl is-enabled NetworkManager
+check "NetworkManager Running" systemctl is-active NetworkManager
+
+check "Bluetooth Enabled" systemctl is-enabled bluetooth
+check "Bluetooth Running" systemctl is-active bluetooth
+
+if systemctl --user list-unit-files | grep -q '^mpd\.service'; then
+    check "MPD Enabled" systemctl --user is-enabled mpd
+    check "MPD Running" systemctl --user is-active mpd
+fi
+
+divider
+
+# --------------------------------------------------
+# Oh My Zsh
+# --------------------------------------------------
+
+section "Oh My Zsh"
+
+CUSTOM="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
+
+check "Oh My Zsh" test -d "$HOME/.oh-my-zsh"
+
+check "Autosuggestions" \
+    test -d "$CUSTOM/plugins/zsh-autosuggestions"
+
+check "Syntax Highlighting" \
+    test -d "$CUSTOM/plugins/zsh-syntax-highlighting"
+
+check "fzf-tab" \
+    test -d "$CUSTOM/plugins/fzf-tab"
+
+check "zsh-completions" \
+    test -d "$CUSTOM/plugins/zsh-completions"
+
+check "you-should-use" \
+    test -d "$CUSTOM/plugins/you-should-use"
+
+divider
+
+# --------------------------------------------------
+# Configuration Files
+# --------------------------------------------------
+
+section "Configuration"
+
+check "Hyprland" test -d "$HOME/.config/hypr"
+check "Kitty" test -d "$HOME/.config/kitty"
+check "Waybar" test -d "$HOME/.config/waybar"
+check "Yazi" test -d "$HOME/.config/yazi"
+check "Starship" test -f "$HOME/.config/starship.toml"
+check "fonts.conf" test -f "$HOME/.config/fontconfig/fonts.conf"
+check ".zshrc" test -f "$HOME/.zshrc"
+check ".tmux.conf" test -f "$HOME/.tmux.conf"
+
+divider
+
+# --------------------------------------------------
+# Optional Software
+# --------------------------------------------------
+
+section "Optional Software"
+
+check "Docker" command_exists docker
+check "Steam" command_exists steam
+check "Prism Launcher" command_exists prismlauncher
+check "VS Code" command_exists code
+
+divider
+
+# --------------------------------------------------
+# Graphics
+# --------------------------------------------------
+
+section "Graphics"
+
+GPU="$(lspci | grep -Ei 'VGA|3D|Display' | head -n1 | cut -d: -f3-)"
+
+printf "%s\n" "$GPU"
+
+divider
+
+# --------------------------------------------------
+# Chezmoi
+# --------------------------------------------------
+
+section "Chezmoi"
+
+if chezmoi status | grep -q .; then
+    warn "Unapplied chezmoi changes detected."
+    chezmoi status
+else
+    success "Dotfiles are up to date."
+fi
+
+divider
+
+# --------------------------------------------------
+# Failed Services
+# --------------------------------------------------
+
+section "Failed Services"
+
+if systemctl --failed --quiet; then
+    warn "System services have failed."
+    systemctl --failed --no-pager
+else
+    success "No failed system services."
+fi
+
+echo
+
+if systemctl --user --failed --quiet; then
+    warn "User services have failed."
+    systemctl --user --failed --no-pager
+else
+    success "No failed user services."
+fi
+
+divider
+
+# --------------------------------------------------
+# Summary
+# --------------------------------------------------
+
+section "Summary"
+
+printf "Passed : ${GREEN}%d${RESET}\n" "$PASS"
+printf "Failed : ${RED}%d${RESET}\n" "$FAIL"
+
+echo
+
+if (( FAIL == 0 )); then
+    success "Everything looks good!"
+else
+    warn "Some checks failed. Review the output above."
+fi
