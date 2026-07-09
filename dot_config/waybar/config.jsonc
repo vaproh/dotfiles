@@ -176,17 +176,22 @@
     "tooltip-format-disconnected": "Disconnected",
   },
   "battery": {
+    "format": "<span font-size='medium' rise='1.5pt'>{capacity}%</span> <span font-size='x-large'>{icon}</span>",
+    "format-charging": "<span font-size='medium' rise='1.5pt'>{capacity}%</span> <span font-size='x-large'>{icon}</span>",
+    "format-plugged": "<span font-size='medium' rise='1.5pt'>{capacity}%</span> <span font-size='x-large'>󱐥</span>",
+    "format-icons": {
+      "charging": ["󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"],
+      "default": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+    },
+    "format-full": "󰂅",
+    "tooltip-format-discharging": "{power:>1.0f}W↓ {capacity}%",
+    "tooltip-format-charging": "{power:>1.0f}W↑ {capacity}%",
     "interval": 1,
     "states": {
       "good": 95,
-      "warning": 30,
-      "critical": 15,
+      "warning": 20,
+      "critical": 10,
     },
-    "format": "<span font-size='medium' rise='1.5pt'>{capacity}%</span> <span font-size='x-large'>{icon}</span>",
-    "format-charging": "<span font-size='medium' rise='1.5pt'>{capacity}%</span> <span font-size='x-large'>󰂄</span>",
-    "format-plugged": "<span font-size='medium' rise='1.5pt'>{capacity}%</span> <span font-size='x-large'>󱐥</span>",
-    "format-alt": "{timeto} {power}",
-    "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"], // Battery icons
   },
   "group/brightness": {
     "orientation": "inherit",
