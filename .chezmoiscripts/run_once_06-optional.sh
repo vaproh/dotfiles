@@ -14,6 +14,8 @@ OPTIONAL_SCRIPTS=(
     "Gaming|install-gaming.sh"
     "Laptop|install-laptop.sh"
     "Neovim Config|install-nvim.sh"
+    "SDDM Theme (astronaut + 10 variants)|install-sddm-theme.sh"
+    "GRUB Theme (Vimix)|install-grub-theme.sh"
 )
 
 for item in "${OPTIONAL_SCRIPTS[@]}"; do

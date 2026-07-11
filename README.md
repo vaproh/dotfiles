@@ -69,6 +69,8 @@ bash .chezmoi_optional/install-laptop.sh      # Power management, Bluetooth
 bash .chezmoi_optional/install-development.sh # Docker, GitHub CLI, Lazygit
 bash .chezmoi_optional/install-docker.sh      # Docker with service setup
 bash .chezmoi_optional/install-nvim.sh        # Clone Neovim config
+bash .chezmoi_optional/install-sddm-theme.sh  # SDDM astronaut theme (10 variants)
+bash .chezmoi_optional/install-grub-theme.sh  # GRUB Vimix theme
 ```
 
 Or run the interactive menu again:
@@ -101,8 +103,10 @@ bash .chezmoiscripts/run_once_06-optional.sh
 │   ├── install-development.sh
 │   ├── install-docker.sh
 │   ├── install-gaming.sh
+│   ├── install-grub-theme.sh
 │   ├── install-laptop.sh
-│   └── install-nvim.sh
+│   ├── install-nvim.sh
+│   └── install-sddm-theme.sh
 ├── dot_config/                # ~/.config/*
 │   ├── hypr/                  # Hyprland config (hypridle, input, animations)
 │   ├── waybar/                # Waybar config
