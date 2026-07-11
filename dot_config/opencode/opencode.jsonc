@@ -1,18 +1,51 @@
 {
   "$schema": "https://opencode.ai/config.json",
+
   "lsp": {
     "basedpyright": {
       "command": ["basedpyright-langserver", "--stdio"],
       "extensions": [".py"],
       "priority": 100,
     },
+
     "ruff": {
       "command": ["ruff", "server"],
       "extensions": [".py"],
       "priority": 90,
     },
+
     "pyright": {
       "disabled": true,
+    },
+  },
+
+  "mcp": {
+    "context7": {
+      "type": "remote",
+      "url": "https://mcp.context7.com/mcp",
+      "headers": {
+        "CONTEXT7-API-KEY": "{env:CONTEXT7_API_KEY}",
+      },
+      "enabled": true,
+    },
+
+    "exa": {
+      "type": "local",
+      "command": ["npx", "-y", "exa-mcp-server"],
+      "environment": {
+        "EXA_API_KEY": "{env:EXA_API_KEY}",
+      },
+      "enabled": true,
+    },
+
+    "openapi": {
+      "type": "local",
+      "command": ["npx", "-y", "@ivotoby/openapi-mcp-server"],
+      "environment": {
+        "API_BASE_URL": "http://localhost:8000",
+        "OPENAPI_SPEC_PATH": "http://localhost:8000/openapi.json",
+      },
+      "enabled": true,
     },
   },
 }

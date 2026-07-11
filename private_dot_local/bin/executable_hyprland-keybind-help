@@ -73,12 +73,12 @@ SPECIAL WORKSPACES (Scratchpad)
   Super + Shift + S       → Move Window to Scratchpad
   Super + X               → Toggle Magic Workspace
 
-SCREENSHOTS
+SCREENSHOTS (saved to ~/Pictures/Screenshots/month - year/)
 ──────────────────────────────────────────────────────────────────
   Super + Insert          → Capture Active Monitor
   Super + Ctrl + Insert   → Capture Active Window
   Super + Shift + Insert  → Capture Region
-  Super + Shift + Ctrl + Insert → Capture with Annotation (Satty)
+  Super + Shift + Ctrl + Insert → Capture Region + Annotate (Satty)
 
 UTILITIES
 ──────────────────────────────────────────────────────────────────
@@ -86,7 +86,7 @@ UTILITIES
   Super + Ctrl + N        → Toggle Night Filter (Wlsunset)
   Win + F1                → Powersave Mode (Disable Animations)
 
-WAYScriber
+WAYSCRIBER
 ──────────────────────────────────────────────────────────────────
   Super + MouseBack       → Toggle Wayscriber Daemon
   Super + Shift + MouseBack → Toggle Wayscriber Freeze

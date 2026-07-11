@@ -53,7 +53,7 @@
     "format-paused": "{status_icon} {dynamic}",
     "format-stopped": "", // Hide when stopped
     "format-disconnected": "", // Hide when disconnected
-    "dynamic-len": 25,
+    "dynamic-len": 40,
     "dynamic-order": ["title", "artist", "position", "length"],
     "interval": 1,
     "player-icons": {

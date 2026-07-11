@@ -1,0 +1,39 @@
+{
+  "$schema": "https://charm.land/crush.json",
+  "lsp": {
+    "basedpyright": {
+      "command": "basedpyright-langserver",
+      "args": ["--stdio"],
+      "filetypes": ["py"]
+    },
+    "ruff": {
+      "command": "ruff",
+      "args": ["server"],
+      "filetypes": ["py"]
+    }
+  },
+  "mcp": {
+    "context7": {
+      "type": "http",
+      "url": "https://mcp.context7.com/mcp",
+      "headers": {
+        "CONTEXT7-API-KEY": "{env:CONTEXT7_API_KEY}"
+      },
+      "enabled": true
+    },
+    "exa": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "exa-mcp-server"],
+      "env": {
+        "EXA_API_KEY": "$EXA_API_KEY"
+      }
+    },
+    "fetch": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "mcp-fetch-server"],
+      "enabled": true
+    }
+  }
+}
