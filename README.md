@@ -4,13 +4,17 @@ Arch Linux + Hyprland (Wayland) configuration managed with [chezmoi](https://www
 
 ## What's Included
 
-- **Window Manager**: Hyprland + Waybar + Wofi + SwayNC
+- **Window Manager**: Hyprland + Waybar + Wofi + SwayNC + Hypridle
 - **Terminal**: Kitty + Zsh + Oh My Zsh + Starship
-- **Editor**: Neovim (AstroNvim)
+- **Editor**: Neovim (AstroNvim) + Crush (AI coding agent)
 - **File Manager**: Dolphin + Yazi
 - **Shell Tools**: fzf, zoxide, bat, eza, fd, ripgrep, jq
+- **AI Tools**: opencode, crush (with MCP servers: Context7, Exa, Fetch, OpenAPI)
 - **Fonts**: Inter, Iosevka, JetBrains Mono, Maple Mono, Nerd Fonts, Emoji
 - **Appearance**: Papirus icons, Materia theme, Kvantum, Pywal
+- **Templates**: `dot_example_zshenv` - API key template for AI tools
+- **Media**: ncmpcpp (MPD client)
+- **Utilities**: btop, fastfetch, wlogout, rofi, zathura, sxhkd
 
 ## Prerequisites
 
@@ -99,29 +103,39 @@ bash .chezmoiscripts/run_once_06-optional.sh
 │   ├── install-gaming.sh
 │   ├── install-laptop.sh
 │   └── install-nvim.sh
-├── dot_config/              # ~/.config/*
-│   ├── hypr/               # Hyprland config
-│   ├── waybar/             # Waybar config
-│   ├── kitty/              # Kitty terminal
-│   ├── wofi/               # App launcher
-│   ├── swaync/             # Notifications
-│   ├── btop/               # System monitor
-│   ├── fastfetch/          # System info
-│   ├── yazi/               # File manager
-│   ├── zathura/            # PDF viewer
-│   ├── fontconfig/         # Font configuration
-│   ├── qt5ct/              # Qt5 theming
-│   ├── qt6ct/              # Qt6 theming
-│   ├── Kvantum/            # Qt theme engine
-│   ├── MangoHud/           # Gaming overlay
-│   └── starship.toml       # Shell prompt
+├── dot_config/                # ~/.config/*
+│   ├── hypr/                  # Hyprland config (hypridle, input, animations)
+│   ├── waybar/                # Waybar config
+│   ├── kitty/                 # Kitty terminal + themes
+│   ├── wofi/                  # App launcher
+│   ├── swaync/                # Notifications + themes
+│   ├── btop/                  # System monitor
+│   ├── fastfetch/             # System info
+│   ├── yazi/                  # File manager
+│   ├── zathura/               # PDF viewer
+│   ├── ncmpcpp/               # MPD client
+│   ├── fontconfig/            # Font configuration
+│   ├── qt5ct/                 # Qt5 theming
+│   ├── qt6ct/                 # Qt6 theming
+│   ├── Kvantum/               # Qt theme engine
+│   ├── MangoHud/              # Gaming overlay
+│   ├── rofi/                  # App launcher config + themes
+│   ├── swaync/                # Notification center themes
+│   ├── sxhkd/                 # Hotkey daemon (bspwm/dwm configs)
+│   ├── opencode/              # OpenCode AI agent config (MCP: Context7, Exa, OpenAPI, Fetch)
+│   ├── crush/                 # Crush AI agent config (MCP: Context7, Exa, Fetch)
+│   ├── gtk-4.0/               # GTK4 theming
+│   ├── kdeglobals/            # KDE globals
+│   ├── starship.toml          # Shell prompt
+│   └── wlogout/               # Logout menu + themes
 ├── dot_local/
-│   └── bin/                # Scripts (~/.local/bin/*)
+│   └── bin/                   # Scripts (~/.local/bin/*)
 │       └── executable_verify  # System verification
-├── dot_zshrc               # Zsh configuration
-├── dot_gitconfig           # Git configuration
-├── dot_tmux.conf           # Tmux configuration
-├── dot_fzf.zsh             # Fzf integration
+├── dot_zshrc                  # Zsh configuration
+├── dot_gitconfig              # Git configuration
+├── dot_tmux.conf              # Tmux configuration
+├── dot_fzf.zsh                # Fzf integration
+├── dot_example_zshenv         # Example zshenv with API keys
 └── README.md
 ```
 
@@ -169,6 +183,22 @@ Located in `~/.local/bin/`:
 | `hyprland-keybind-help` | Show Hyprland keybindings |
 | `nuclear_portal_hyprland` | Fix portal issues |
 | `songinfo` | Show current playing song |
+
+## AI Tools
+
+| Tool | Config | MCP Servers |
+|------|--------|-------------|
+| **opencode** | `~/.config/opencode/opencode.jsonc` | Context7, Exa, OpenAPI, Fetch |
+| **crush** | `~/.config/crush/crush.json` | Context7, Exa, Fetch |
+
+Both tools include MCP server configurations for enhanced capabilities (web search, API docs, code search, etc.).
+
+Copy the example zshenv to configure API keys:
+
+```bash
+cp ~/.local/share/chezmoi/dot_example_zshenv ~/.zshenv
+# Edit ~/.zshenv and add your API keys
+```
 
 ## Keybindings
 
