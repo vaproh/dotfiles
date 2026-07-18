@@ -38,12 +38,27 @@
       "enabled": true,
     },
 
-    "openapi": {
+    // "openapi": {
+    //   "type": "local",
+    //   "command": ["npx", "-y", "@ivotoby/openapi-mcp-server"],
+    //   "environment": {
+    //     "API_BASE_URL": "http://localhost:8000",
+    //     "OPENAPI_SPEC_PATH": "http://localhost:8000/openapi.json",
+    //   },
+    //   "enabled": true,
+    // },
+
+    "blender": {
       "type": "local",
-      "command": ["npx", "-y", "@ivotoby/openapi-mcp-server"],
-      "environment": {
-        "API_BASE_URL": "http://localhost:8000",
-        "OPENAPI_SPEC_PATH": "http://localhost:8000/openapi.json",
+      "command": ["uvx", "blender-mcp"],
+      "enabled": true,
+    },
+
+    "godot": {
+      "type": "local",
+      "command": ["npx", "-y", "godot-mcp-runtime"],
+      "env": {
+        "GODOT_PATH": "/usr/bin/godot",
       },
       "enabled": true,
     },
