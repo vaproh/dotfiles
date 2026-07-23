@@ -38,6 +38,12 @@
       "enabled": true,
     },
 
+    "playwright": {
+      "type": "local",
+      "command": ["npx", "-y", "@playwright/mcp@latest"],
+      "enabled": true,
+    },
+
     // "openapi": {
     //   "type": "local",
     //   "command": ["npx", "-y", "@ivotoby/openapi-mcp-server"],
@@ -48,19 +54,19 @@
     //   "enabled": true,
     // },
 
-    "blender": {
-      "type": "local",
-      "command": ["uvx", "blender-mcp"],
-      "enabled": true,
-    },
-
-    "godot": {
-      "type": "local",
-      "command": ["npx", "-y", "godot-mcp-runtime"],
-      "env": {
-        "GODOT_PATH": "/usr/bin/godot",
-      },
-      "enabled": true,
-    },
+    // "blender": {
+    //   "type": "local",
+    //   "command": ["uvx", "blender-mcp"],
+    //   "enabled": true,
+    // },
+    //
+    // "godot": {
+    //   "type": "local",
+    //   "command": ["npx", "-y", "godot-mcp-runtime"],
+    //   "env": {
+    //     "GODOT_PATH": "/usr/bin/godot",
+    //   },
+    //   "enabled": true,
+    // },
   },
 }
