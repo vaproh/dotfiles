@@ -9,16 +9,28 @@ source "$SCRIPT_DIR/../.chezmoi_lib/packages.sh"
 
 header "Installing Development Packages"
 
-PACKAGES=(
-    docker
-    docker-compose
+PACMAN_PACKAGES=(
     github-cli
     lazygit
     nodejs
     npm
     just
+    pnpm
+    go
+    rustup
+    opencode
 )
 
-install_pacman "${PACKAGES[@]}"
+AUR_PACKAGES=(
+    rtk-bin
+)
+
+install_pacman "${PACMAN_PACKAGES[@]}"
+
+if [[ ${#AUR_PACKAGES[@]} -gt 0 ]]; then
+    if gum confirmation --default=false "Install AUR packages?"; then
+        install_aur "${AUR_PACKAGES[@]}"
+    fi
+fi
 
 success "Development packages installed."

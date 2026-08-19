@@ -208,3 +208,6 @@ dev() {
     fi
 }
 
+
+# kilo
+export PATH=/home/vaproh/.kilo/bin:$PATH

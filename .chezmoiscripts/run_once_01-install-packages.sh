@@ -275,6 +275,7 @@ AUR_PACKAGES=(
     # --------------------------------------------------
 
     brave-origin-bin
+    zen-browser-bin
 
     # --------------------------------------------------
     # Video
@@ -288,8 +289,36 @@ section "Installing Official Packages"
 
 install_pacman "${PACMAN_PACKAGES[@]}"
 
-section "Installing AUR Packages"
+if gum confirmation --default=true "Install AUR packages?"; then
+    section "Selecting AUR Packages"
 
-install_aur "${AUR_PACKAGES[@]}"
+    if command -v gum &>/dev/null; then
+        SELECTED_AUR=$(gum choose --no-limit --header "Select AUR packages to install:" "${AUR_PACKAGES[@]}")
+    else
+        echo "Available AUR packages:"
+        for i in "${!AUR_PACKAGES[@]}"; do
+            echo "  $((i+1)). ${AUR_PACKAGES[i]}"
+        done
+        echo -n "Enter numbers (space-separated, or 'all'): "
+        read -r selections
+        if [[ "$selections" == "all" ]]; then
+            SELECTED_AUR="${AUR_PACKAGES[*]}"
+        else
+            SELECTED_AUR=""
+            for num in $selections; do
+                idx=$((num - 1))
+                if [[ $idx -ge 0 && $idx -lt ${#AUR_PACKAGES[@]} ]]; then
+                    SELECTED_AUR="$SELECTED_AUR ${AUR_PACKAGES[idx]}"
+                fi
+            done
+        fi
+    fi
+
+    if [[ -n "${SELECTED_AUR:-}" ]]; then
+        install_aur $SELECTED_AUR
+    else
+        info "No AUR packages selected."
+    fi
+fi
 
 success "Package installation complete."

@@ -9,10 +9,11 @@ Arch Linux + Hyprland (Wayland) configuration managed with [chezmoi](https://www
 - **Editor**: Neovim (AstroNvim) + Crush (AI coding agent)
 - **File Manager**: Dolphin + Yazi
 - **Shell Tools**: fzf, zoxide, bat, eza, fd, ripgrep, jq
-- **AI Tools**: opencode, crush (with MCP servers: Context7, Exa, Fetch, OpenAPI)
+- **AI Tools**: opencode, crush, rtk (with MCP servers: Context7, Exa, Fetch, OpenAPI)
 - **Fonts**: Inter, Iosevka, JetBrains Mono, Maple Mono, Nerd Fonts, Emoji
 - **Appearance**: Papirus icons, Materia theme, Kvantum, Pywal
 - **Templates**: `dot_example_zshenv` - API key template for AI tools
+- **Browsers**: Brave, Zen Browser
 - **Media**: ncmpcpp (MPD client)
 - **Utilities**: btop, fastfetch, wlogout, rofi, zathura, sxhkd
 
@@ -47,7 +48,7 @@ chezmoi will clone this repository and execute scripts in order:
 | # | Script | Description |
 |---|--------|-------------|
 | 0 | `run_once_00-install-yay.sh` | Install yay (AUR helper) |
-| 1 | `run_once_01-install-packages.sh` | Install all packages (~240 packages) |
+| 1 | `run_once_01-install-packages.sh` | Install all packages (~132 packages) |
 | 2 | `run_once_02-install-fonts.sh` | Install fonts (~20 packages) |
 | 3 | `run_once_03-install-ohmyzsh.sh` | Install Oh My Zsh + plugins |
 | 4 | `run_once_04-enable-services.sh` | Enable services (NetworkManager, PipeWire, WirePlumber) |
@@ -66,7 +67,7 @@ During initial setup, `run_once_06-optional.sh` will prompt you to install optio
 chezmoi cd
 bash .chezmoi_optional/install-gaming.sh      # Steam, Proton, Wine, MangoHud
 bash .chezmoi_optional/install-laptop.sh      # Power management, Bluetooth
-bash .chezmoi_optional/install-development.sh # Docker, GitHub CLI, Lazygit
+bash .chezmoi_optional/install-development.sh # GitHub CLI, Lazygit, Node, Go, Rust, OpenCode, rtk
 bash .chezmoi_optional/install-docker.sh      # Docker with service setup
 bash .chezmoi_optional/install-nvim.sh        # Clone Neovim config
 bash .chezmoi_optional/install-sddm-theme.sh  # SDDM astronaut theme (10 variants)
@@ -194,6 +195,7 @@ Located in `~/.local/bin/`:
 |------|--------|-------------|
 | **opencode** | `~/.config/opencode/opencode.jsonc` | Context7, Exa, OpenAPI, Fetch |
 | **crush** | `~/.config/crush/crush.json` | Context7, Exa, Fetch |
+| **rtk** | CLI proxy (AUR) | Reduces LLM token consumption |
 
 Both tools include MCP server configurations for enhanced capabilities (web search, API docs, code search, etc.).
 

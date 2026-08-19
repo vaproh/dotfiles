@@ -1,6 +1,77 @@
 {
   "$schema": "https://opencode.ai/config.json",
 
+  "provider": {
+    "openrouter": {
+      "models": {
+        "deepseek/deepseek-v4-flash": {
+          "options": {
+            "provider": {
+              "only": ["baidu/fp8"],
+            },
+          },
+        },
+      },
+    },
+  },
+
+  "plugin": [
+    "@dietrichgebert/ponytail@4.9.0",
+    "@tarquinen/opencode-dcp@3.1.14",
+    "@maestria/opencode@0.6.18",
+    "opencode-session-recall@2.0.0",
+    [
+      "@knikolov/opencode-plugin-simple-memory@1.1.1",
+      {
+        "autoLoad": true,
+        "autoSave": true,
+        "contextLimit": 3,
+        "contextMaxChars": 800
+      }
+    ]
+  ],
+
+  "autoupdate": false,
+
+  "watcher": {
+    "ignore": ["node_modules/**", "dist/**", ".git/**", ".venv/**", "__pycache__/**", ".svelte-kit/**"]
+  },
+
+  "compaction": {
+    "prune": true,
+    "tail_turns": 1,
+    "reserved": 20000
+  },
+
+  "tool_output": {
+    "max_lines": 1000,
+    "max_bytes": 25000
+  },
+
+  "agent": {
+    "explore": {
+      "tools": {
+        "skill": false
+      }
+    },
+    "orchestrator": {
+      "model": "opencode-go/deepseek-v4-flash",
+      "color": "#FFB020",
+      "permission": {
+        "context7_*": "allow",
+        "exa_*": "allow",
+        "playwright_*": "deny"
+      }
+    },
+    "adventurer": { "model": "opencode-go/deepseek-v4-flash" },
+    "builder": { "model": "opencode-go/deepseek-v4-flash" },
+    "diagnose": { "model": "opencode-go/deepseek-v4-flash" },
+    "writer": { "model": "opencode-go/deepseek-v4-flash" },
+    "planner": { "model": "opencode-go/deepseek-v4-flash" },
+    "architect": { "model": "opencode-go/deepseek-v4-flash" },
+    "reviewer": { "model": "opencode-go/deepseek-v4-flash" }
+  },
+
   "lsp": {
     "basedpyright": {
       "command": ["basedpyright-langserver", "--stdio"],
@@ -43,16 +114,6 @@
       "command": ["npx", "-y", "@playwright/mcp@latest"],
       "enabled": true,
     },
-
-    // "openapi": {
-    //   "type": "local",
-    //   "command": ["npx", "-y", "@ivotoby/openapi-mcp-server"],
-    //   "environment": {
-    //     "API_BASE_URL": "http://localhost:8000",
-    //     "OPENAPI_SPEC_PATH": "http://localhost:8000/openapi.json",
-    //   },
-    //   "enabled": true,
-    // },
 
     // "blender": {
     //   "type": "local",
