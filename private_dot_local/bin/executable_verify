@@ -89,6 +89,8 @@ check "git" command_exists git
 check "zsh" command_exists zsh
 check "tmux" command_exists tmux
 check "kitty" command_exists kitty
+check "Niri" command_exists niri
+check "Noctalia" command_exists noctalia
 check "Hyprland" command_exists Hyprland
 check "Waybar" command_exists waybar
 check "Neovim" command_exists nvim
@@ -162,6 +164,8 @@ divider
 section "Configuration"
 
 check "Hyprland" test -d "$HOME/.config/hypr"
+check "Niri" test -d "$HOME/.config/niri"
+check "Noctalia" test -d "$HOME/.config/noctalia"
 check "Kitty" test -d "$HOME/.config/kitty"
 check "Waybar" test -d "$HOME/.config/waybar"
 check "Yazi" test -d "$HOME/.config/yazi"

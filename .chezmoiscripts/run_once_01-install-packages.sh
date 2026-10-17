@@ -22,8 +22,15 @@ PACMAN_PACKAGES=(
     hyprpicker
     hyprpaper
 
+    # Niri (primary scrollable-tiling compositor) + Noctalia shell
+    niri
+    noctalia
+    xwayland-satellite
+
     xdg-desktop-portal
     xdg-desktop-portal-hyprland
+    xdg-desktop-portal-gtk
+    xdg-desktop-portal-gnome
     xdg-utils
     xwaylandvideobridge
 
