@@ -1,3 +1,7 @@
+# A TOML linter such as Tombi can use this schema to validate your config.
+# If you encounter any problems, please file an issue at https://github.com/yazi-rs/schemas.
+#:schema https://yazi-rs.github.io/schemas/yazi.json
+
 [mgr]
 ratio = [1, 4, 3]
 sort_by = "natural"
@@ -8,56 +12,75 @@ sort_translit = false
 linemode = "size_and_mtime"
 show_hidden = false
 show_symlink = true
-scrolloff = 5
+scrolloff = 10
 mouse_events = ["click", "scroll"]
-title_format = "Yazi: {cwd}"
+# NOTE: `title_format` was removed upstream (see `ind-app-title` DDS event).
+# Yazi will warn on unknown keys, so it is dropped here.
 
 [preview]
-wrap = "no"
+wrap = "yes"
 tab_size = 2
 max_width = 600
 max_height = 900
 
 [opener]
 edit = [
-    { run = '${EDITOR:-nvim} "$@"', desc = "$EDITOR", block = true, for = "unix" },
+    { run = 'nvim %s1', desc = "nvim", block = true, for = "unix" },
 ]
-open = [{ run = 'xdg-open "$1"', desc = "Open", for = "linux" }]
+open = [
+    { run = 'xdg-open %s1', desc = "Open", for = "linux" },
+]
 reveal = [
-    { run = 'xdg-open "$(dirname "$1")"', desc = "Reveal", for = "linux" },
+    { run = 'xdg-open %d1', desc = "Reveal", for = "linux" },
 ]
 play = [
-    { run = 'mpv --force-window "$@"', orphan = true, for = "linux" },
+    { run = 'mpv --force-window %s1', orphan = true, for = "linux" },
 ]
 image = [
-    { run = 'imv "$@"', orphan = true, for = "linux" },
+    { run = 'imv %s1', orphan = true, for = "linux" },
 ]
 audio = [
-    { run = 'mpg123 "$@"', block = true, desc = "Play Audio", for = "linux" },
+    { run = 'mpg123 %s1', block = true, desc = "Play Audio", for = "linux" },
 ]
 pdf = [
-    { run = 'zathura "$@"', orphan = true, desc = "PDF", for = "linux" },
+    { run = 'zathura %s1', orphan = true, desc = "PDF", for = "linux" },
+]
+extract = [
+    { run = 'ouch d -y %s', desc = "Extract with ouch", for = "linux" },
 ]
 
+# Use prepend_rules so new upstream default rules (trash, vfs, empty file,
+# download, etc.) still apply as fallback. These three just force your
+# custom openers for media/images/PDFs.
 [open]
-rules = [
-    { url = "*/", use = ["edit", "open", "reveal"] },
-    { mime = "text/*", use = ["edit", "reveal"] },
+prepend_rules = [
     { mime = "image/*", use = ["image", "reveal"] },
-    { mime = "video/*", use = ["play", "reveal"] },
-    { mime = "audio/*", use = ["audio", "reveal"] },
+    { mime = "{audio,video}/*", use = ["play", "reveal"] },
     { mime = "application/pdf", use = ["pdf", "reveal"] },
-    { url = "*", use = ["open", "reveal"] },
+]
+
+[plugin]
+prepend_preloaders = [
+    { mime = "{audio,video,image}/*", run = "mediainfo" },
+    { mime = "application/subrip", run = "mediainfo" },
+    { mime = "image/*", run = "mediainfo --no-metadata" },
+    { mime = "video/*", run = "mediainfo --no-preview" },
+]
+
+prepend_previewers = [
+    { mime = "{audio,video,image}/*", run = "mediainfo" },
+    { mime = "application/subrip", run = "mediainfo" },
+    { mime = "image/*", run = "mediainfo --no-metadata" },
+    { mime = "video/*", run = "mediainfo --no-preview" },
+    { url = "*.csv", run = "rich-preview" },
+    { url = "*.json", run = "rich-preview" },
+    { url = "*.rst", run = "rich-preview" },
+    { url = "*.ipynb", run = "rich-preview" },
+    { mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive}", run = "ouch" },
 ]
 
 [tasks]
-micro_workers = 10
-macro_workers = 10
-bizarre_retry = 3
+file_workers = 5
 
 [input]
 cursor_blink = true
-
-[confirm]
-trash_title = "Trash {n} selected file{s}?"
-delete_title = "Permanently delete {n} selected file{s}?"
