@@ -6,10 +6,10 @@ Arch Linux + Hyprland (Wayland) configuration managed with [chezmoi](https://www
 
 - **Window Manager**: Hyprland + Waybar + Wofi + SwayNC + Hypridle
 - **Terminal**: Kitty + Zsh + Oh My Zsh + Starship
-- **Editor**: Neovim (AstroNvim) + Crush (AI coding agent)
+- **Editor**: Neovim (AstroNvim)
 - **File Manager**: Dolphin + Yazi
 - **Shell Tools**: fzf, zoxide, bat, eza, fd, ripgrep, jq
-- **AI Tools**: opencode, crush, rtk (with MCP servers: Context7, Exa, Playwright, GitHub)
+- **AI Tools**: opencode, rtk (with MCP servers: Context7, Exa, Playwright, GitHub)
 - **Fonts**: Inter, Iosevka, JetBrains Mono, Maple Mono, Nerd Fonts, Emoji
 - **Appearance**: Papirus icons, Materia theme, Kvantum, Pywal
 - **Templates**: `dot_example_zshenv` - API key template for AI tools
@@ -128,7 +128,6 @@ bash .chezmoiscripts/run_once_06-optional.sh
 │   ├── swaync/                # Notification center themes
 │   ├── sxhkd/                 # Hotkey daemon (bspwm/dwm configs)
 │   ├── opencode/              # opencode.jsonc, cli.json, dcp.jsonc, plugins/ (MCP: Context7, Exa, Playwright, GitHub)
-│   ├── crush/                 # Crush AI agent config (MCP: Context7, Exa, Fetch)
 │   ├── gtk-4.0/               # GTK4 theming
 │   ├── kdeglobals/            # KDE globals
 │   ├── starship.toml          # Shell prompt
@@ -194,10 +193,9 @@ Located in `~/.local/bin/`:
 | Tool | Config | MCP Servers |
 |------|--------|-------------|
 | **opencode** | `~/.config/opencode/` (`opencode.jsonc`, `cli.json`, `dcp.jsonc`, `plugins/rtk.ts`) | Context7, Exa, Playwright, GitHub |
-| **crush** | `~/.config/crush/crush.json` | Context7, Exa, Fetch |
 | **rtk** | CLI proxy (AUR) | Reduces LLM token consumption |
 
-Both tools include MCP server configurations for enhanced capabilities (web search, API docs, code search, etc.).
+OpenCode includes MCP server configurations for enhanced capabilities (web search, API docs, code search, etc.).
 
 Copy the example zshenv to configure API keys:
 
