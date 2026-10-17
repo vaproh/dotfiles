@@ -1,0 +1,20 @@
+input {
+    keyboard {
+        xkb {
+            layout "us"
+        }
+        repeat-delay 300
+        repeat-rate 30
+        numlock
+    }
+    mouse {
+        accel-profile "flat"
+    }
+    touchpad {
+        tap
+        natural-scroll
+        middle-emulation
+    }
+    focus-follows-mouse
+    warp-mouse-to-focus
+}

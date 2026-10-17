@@ -16,7 +16,6 @@ FONTS=(
     noto-fonts-emoji
 
     ttf-libertinus
-    ttf-iodidone
 
     ttf-ioskeley-mono-nerd
     ttf-iosevka-nerd

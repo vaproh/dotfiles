@@ -4,6 +4,8 @@ require("full-border"):setup {
 
 require("git"):setup()
 
+require("osc7"):setup()
+
 require("duckdb"):setup()
 
 require("custom-shell"):setup({
@@ -41,10 +43,8 @@ require("yatline"):setup({
 	cut = { icon = "", fg = "red" },
 
 	total = { icon = "󰮍", fg = "yellow" },
-	succ = { icon = "", fg = "green" },
-	fail = { icon = "", fg = "red" },
-	found = { icon = "󰮕", fg = "blue" },
-	processed = { icon = "󰐍", fg = "green" },
+	success = { icon = "", fg = "green" },
+	failed = { icon = "", fg = "red" },
 
 	show_background = true,
 
@@ -116,3 +116,20 @@ function Linemode:size_and_mtime()
 	local size = self._file:size()
 	return string.format("%s %s", size and ya.readable_size(size) or "-", time)
 end
+
+-- Per-folder sorting: newest-first mtime + dirs-first in these trees
+ps.sub("ind-sort", function(opt)
+	local cwd = tostring(cx.active.current.cwd)
+	local home = os.getenv("HOME") or ""
+	local function under(base)
+		return cwd == base or cwd:find(base .. "/", 1, true) == 1
+	end
+	opt.dir_first = true
+	if under(home .. "/Downloads")
+		or under(home .. "/Coding")
+		or under(home .. "/Pictures")
+		or under(home .. "/Stuff") then
+		opt.by, opt.reverse = "mtime", true
+	end
+	return opt
+end)

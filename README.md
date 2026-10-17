@@ -1,10 +1,12 @@
 # Dotfiles
 
-Arch Linux + Hyprland (Wayland) configuration managed with [chezmoi](https://www.chezmoi.io/).
+Arch Linux (Wayland) configuration managed with [chezmoi](https://www.chezmoi.io/).
+
+Primary setup: **Niri** (scrollable-tiling compositor) + **Noctalia** shell. A **Hyprland** config is also included.
 
 ## What's Included
 
-- **Window Manager**: Hyprland + Waybar + Wofi + SwayNC + Hypridle
+- **Window Manager**: Niri + Noctalia (primary); Hyprland + Waybar + Wofi + SwayNC + Hypridle (also included)
 - **Terminal**: Kitty + Zsh + Oh My Zsh + Starship
 - **Editor**: Neovim (AstroNvim)
 - **File Manager**: Dolphin + Yazi
@@ -48,7 +50,7 @@ chezmoi will clone this repository and execute scripts in order:
 | # | Script | Description |
 |---|--------|-------------|
 | 0 | `run_once_00-install-yay.sh` | Install yay (AUR helper) |
-| 1 | `run_once_01-install-packages.sh` | Install all packages (~132 packages) |
+| 1 | `run_once_01-install-packages.sh` | Install all packages (~138 packages) |
 | 2 | `run_once_02-install-fonts.sh` | Install fonts (~20 packages) |
 | 3 | `run_once_03-install-ohmyzsh.sh` | Install Oh My Zsh + plugins |
 | 4 | `run_once_04-enable-services.sh` | Enable services (NetworkManager, PipeWire, WirePlumber) |
@@ -67,7 +69,7 @@ During initial setup, `run_once_06-optional.sh` will prompt you to install optio
 chezmoi cd
 bash .chezmoi_optional/install-gaming.sh      # Steam, Proton, Wine, MangoHud
 bash .chezmoi_optional/install-laptop.sh      # Power management, Bluetooth
-bash .chezmoi_optional/install-development.sh # GitHub CLI, Lazygit, Node, Go, Rust, OpenCode, rtk
+bash .chezmoi_optional/install-development.sh # GitHub CLI, Lazygit, Node, Go, Rust (rustup), C/C++ build tools, OpenCode, rtk
 bash .chezmoi_optional/install-docker.sh      # Docker with service setup
 bash .chezmoi_optional/install-nvim.sh        # Clone Neovim config
 bash .chezmoi_optional/install-sddm-theme.sh  # SDDM astronaut theme (10 variants)
@@ -110,6 +112,8 @@ bash .chezmoiscripts/run_once_06-optional.sh
 │   └── install-sddm-theme.sh
 ├── dot_config/                # ~/.config/*
 │   ├── hypr/                  # Hyprland config (hypridle, input, animations)
+│   ├── niri/                  # Niri config (categories: keybinds, window-rules, appearance)
+│   ├── noctalia/              # Noctalia shell config + palettes
 │   ├── waybar/                # Waybar config
 │   ├── kitty/                 # Kitty terminal + themes
 │   ├── wofi/                  # App launcher
@@ -166,7 +170,7 @@ verify
 ```
 
 This will check:
-- Core programs (yay, chezmoi, git, zsh, tmux, kitty, Hyprland, Waybar, Neovim, Yazi)
+- Core programs (yay, chezmoi, git, zsh, tmux, kitty, Niri, Noctalia, Hyprland, Waybar, Neovim, Yazi)
 - Fonts (Inter, Maple Mono, Libertinus Serif, Noto Sans)
 - Services (NetworkManager, Bluetooth, MPD)
 - Oh My Zsh and plugins
@@ -205,6 +209,30 @@ cp ~/.local/share/chezmoi/dot_example_zshenv ~/.zshenv
 ```
 
 ## Keybindings
+
+### Niri (primary)
+
+| Key | Action |
+|-----|--------|
+| `SUPER + Return` | Terminal (Kitty) |
+| `SUPER + Space` | App Launcher (Noctalia) |
+| `SUPER + E` | File Manager (Dolphin) |
+| `SUPER + D` | Yazi (floating) |
+| `SUPER + Q` | Close Window |
+| `SUPER + F` | Maximize Column |
+| `SUPER + SHIFT + F` | Fullscreen |
+| `SUPER + SHIFT + Space` | Toggle Floating |
+| `SUPER + H/J/K/L` | Focus |
+| `SUPER + CTRL + H/J/K/L` | Move Window |
+| `SUPER + 1..0` | Switch Workspace |
+| `SUPER + TAB` | Overview |
+| `SUPER + V` | Clipboard (CopyQ) |
+| `SUPER + P` | Session Menu |
+| `SUPER + S` | Control Center |
+| `SUPER + B` | Toggle Bar |
+| `SUPER + PRINT` | Screenshot |
+
+### Hyprland (also included)
 
 | Key | Action |
 |-----|--------|
@@ -284,6 +312,8 @@ curl -fsLS https://get.chezmoi.io | sh; chezmoi init --apply vaproh
 
 ## Credits
 
+- [Niri](https://github.com/YaLTeR/niri)
+- [Noctalia](https://github.com/noctalia-dev/noctalia)
 - [Hyprland](https://hyprland.org/)
 - [AstroNvim](https://astronvim.com/)
 - [Catppuccin](https://catppuccin.com/)

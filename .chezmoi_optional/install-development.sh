@@ -18,7 +18,13 @@ PACMAN_PACKAGES=(
     pnpm
     go
     rustup
+    rust-analyzer
+    rust-src
     opencode
+
+    # C / C++ build tools
+    cmake
+    gdb
 )
 
 AUR_PACKAGES=(
@@ -27,8 +33,15 @@ AUR_PACKAGES=(
 
 install_pacman "${PACMAN_PACKAGES[@]}"
 
+# Latest stable Rust toolchain via rustup (installs if missing, updates if present)
+if command_exists rustup; then
+    info "Installing latest stable Rust toolchain via rustup"
+    rustup default stable
+    rustup update stable
+fi
+
 if [[ ${#AUR_PACKAGES[@]} -gt 0 ]]; then
-    if gum confirmation --default=false "Install AUR packages?"; then
+    if gum confirm --default=false "Install AUR packages?"; then
         install_aur "${AUR_PACKAGES[@]}"
     fi
 fi

@@ -1,0 +1,170 @@
+// ── Browsers → workspace www ──
+window-rule {
+    match app-id="^(firefox|waterfox|librewolf|brave|thorium|chromium|chrome|zen|brave-origin)$"
+    open-on-workspace "www"
+}
+
+// ── Zen → always maximized column ──
+window-rule {
+    match app-id="^zen$"
+    open-on-workspace "www"
+    open-maximized true
+}
+
+// ── Code → workspace cod ──
+window-rule {
+    match app-id="^(code-oss|antigravity-ide|Virt-manager|blender|Exodus|com-azefsw-audioconnect-desktop-app-MainKt)$"
+    open-on-workspace "cod"
+}
+
+// ── OBS → workspace util ──
+window-rule {
+    match app-id="^(com.obsproject.Studio|com.github.PintaProject.Pinta|obsidian|org.qbittorrent.qBittorrent)$"
+    open-on-workspace "util"
+}
+
+// ── Stremio / VLC / Jellyfin → workspace vid ──
+window-rule {
+    match app-id="^(com.stremio.Stremio|vlc|Jellyfin Media Player)$"
+    open-on-workspace "vid"
+}
+
+// ── Spotify/Cider → workspace mus ──
+window-rule {
+    match app-id="^(Spotify|cider)$"
+    open-on-workspace "mus"
+}
+
+// ── Chat → workspace chat (76/24 split) ──
+window-rule {
+    match app-id="^org[.]telegram[.]desktop$"
+    open-on-workspace "chat"
+    default-column-width { proportion 0.24; }
+}
+window-rule {
+    match app-id="^vesktop$"
+    open-on-workspace "chat"
+    default-column-width { proportion 0.76; }
+}
+window-rule {
+    match app-id="^discord$"
+    open-on-workspace "chat"
+    default-column-width { proportion 0.76; }
+}
+window-rule {
+    match app-id="^com[.]ktechpit[.]whatsie$"
+    open-on-workspace "chat"
+    default-column-width { proportion 0.24; }
+}
+
+// ── Steam → workspace soc ──
+window-rule {
+    match app-id="^steam$"
+    open-on-workspace "soc"
+}
+
+// ── Godot → workspace cod ──
+window-rule {
+    match app-id="^Godot$"
+    open-on-workspace "cod"
+}
+
+// ── Motrix → workspace www, float+center ──
+window-rule {
+    match app-id="^Motrix$"
+    open-on-workspace "www"
+    open-floating true
+    default-column-width { fixed 1280; }
+    default-window-height { fixed 720; }
+}
+
+// Zathura → float+center
+window-rule {
+    match app-id="^org.pwmt.zathura$"
+    open-floating true
+    default-column-width { fixed 1280; }
+    default-window-height { fixed 720; }
+}
+
+// ── Float + center apps ──
+window-rule {
+    match app-id="^pavucontrol-qt$"
+    open-floating true
+    default-column-width { fixed 800; }
+    default-window-height { fixed 600; }
+}
+
+window-rule {
+    match app-id="^imv$"
+    open-floating true
+    default-column-width { fixed 1280; }
+    default-window-height { fixed 720; }
+}
+
+window-rule {
+    match app-id="^mpv$"
+    open-floating true
+    default-column-width { fixed 1280; }
+    default-window-height { fixed 720; }
+}
+
+window-rule {
+    match app-id="^com.gabm.satty$"
+    open-floating true
+    default-column-width { fixed 1376; }
+    default-window-height { fixed 860; }
+}
+
+window-rule {
+    match app-id="^hyprland-share-picker$"
+    open-floating true
+    default-column-width { fixed 600; }
+    default-window-height { fixed 400; }
+}
+
+window-rule {
+    match app-id="^scrcpy$"
+    open-floating true
+}
+
+window-rule {
+    match app-id="^com.github.hluk.copyq$"
+    open-floating true
+    default-column-width { fixed 550; }
+    default-window-height { fixed 700; }
+}
+
+window-rule {
+    match app-id="^feh$"
+    open-floating true
+    default-column-width { fixed 1280; }
+    default-window-height { fixed 720; }
+}
+
+window-rule {
+    match title="^floating_yazi$"
+    open-floating true
+    default-column-width { fixed 1280; }
+    default-window-height { fixed 720; }
+}
+
+
+window-rule {
+    match app-id="^waypaper$"
+    open-floating true
+    default-column-width { fixed 810; }
+    default-window-height { fixed 600; }
+}
+
+window-rule {
+    match app-id="^gamescope$"
+    open-floating true
+}
+
+// ── xwaylandvideobridge fix ──
+window-rule {
+    match app-id="^xwaylandvideobridge$"
+    opacity 0.0
+    open-focused false
+    open-floating true
+}

@@ -2,36 +2,89 @@
 # Environment
 # ==============================================================================
 
-export ZSH="$HOME/.oh-my-zsh"
-
 export EDITOR="nvim"
 export QT_QPA_PLATFORMTHEME="qt6ct"
 
-# PATH
-export PATH="$HOME/.local/bin/scripts:$PATH"
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$HOME/.local/bin/scripts:$PATH"
+
+# ==============================================================================
+# Keybindings
+# ==============================================================================
+
+# Emacs-style keybindings
+bindkey -e
+
+# Beginning / end of line
+bindkey '^A' beginning-of-line
+bindkey '^E' end-of-line
+
+# Delete previous word
+bindkey '^[^?' backward-kill-word
+
+# Ctrl + Left / Right
+bindkey '^[[1;5D' backward-word
+bindkey '^[[1;5C' forward-word
+
+# ==============================================================================
+# History
+# ==============================================================================
+
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=10000
+SAVEHIST=10000
+
+setopt APPEND_HISTORY
+setopt INC_APPEND_HISTORY
+setopt HIST_IGNORE_DUPS
+setopt HIST_SAVE_NO_DUPS
+
+# ==============================================================================
+# Completion
+# ==============================================================================
+
+# Native Zsh completion
+autoload -Uz compinit
+compinit -C
+
+# ==============================================================================
+# Plugins
+# ==============================================================================
+
+ZSH_PLUGINS="$HOME/.zsh/plugins"
+
+# ------------------------------------------------------------------------------
+# Autosuggestions
+# ------------------------------------------------------------------------------
+
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
+
+source "$ZSH_PLUGINS/zsh-autosuggestions/zsh-autosuggestions.zsh"
+
+# ------------------------------------------------------------------------------
+# fzf-powered Zsh completion
+# ------------------------------------------------------------------------------
+
+source "$ZSH_PLUGINS/fzf-tab/fzf-tab.zsh"
+
+# ------------------------------------------------------------------------------
+# Warn when an existing command could be used instead of an alias/function
+# ------------------------------------------------------------------------------
+
+source "$ZSH_PLUGINS/you-should-use/you-should-use.plugin.zsh"
+
+# ------------------------------------------------------------------------------
+# Syntax highlighting - MUST be LAST
+# ------------------------------------------------------------------------------
+
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main)
+source "$ZSH_PLUGINS/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
 # ==============================================================================
 # Prompt
 # ==============================================================================
 
-# ZSH_THEME="minimal"
 eval "$(starship init zsh)"
-
-# ==============================================================================
-# Oh My Zsh
-# ==============================================================================
-
-plugins=(
-    git
-    zsh-autosuggestions
-    zsh-syntax-highlighting
-    you-should-use
-    fzf-zsh-plugin
-    fzf-tab
-)
-
-source "$ZSH/oh-my-zsh.sh"
 
 # ==============================================================================
 # Shell Integrations
@@ -42,17 +95,17 @@ eval "$(zoxide init zsh)"
 
 # yazi
 y() {
-    local tmp cwd
+  local tmp cwd
 
-    tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+  tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
 
-    yazi "$@" --cwd-file="$tmp"
+  yazi "$@" --cwd-file="$tmp"
 
-    IFS= read -r -d '' cwd < "$tmp"
+  IFS= read -r -d '' cwd <"$tmp"
 
-    [[ -n "$cwd" && "$cwd" != "$PWD" ]] && builtin cd -- "$cwd"
+  [[ -n "$cwd" && "$cwd" != "$PWD" ]] && builtin cd -- "$cwd"
 
-    rm -f "$tmp"
+  rm -f "$tmp"
 }
 
 # ==============================================================================
@@ -89,125 +142,137 @@ alias ytmdl='yt-dlp -x -f bestaudio -o "%(title)s.%(ext)s"'
 alias ytpdl='yt-dlp -f best -o "%(playlist_index)s. %(title)s.%(ext)s"'
 
 # ==============================================================================
+# Aliases - useful ones
+# ==============================================================================
+
+alias md='mkdir -p'
+alias ..='cd ..'
+
+# ==============================================================================
 # TMUX Helpers
 # ==============================================================================
 
 tmx() {
-    local name
+  local name
 
-    read "name?Session name (leave blank for no name): "
+  read "name?Session name (leave blank for no name): "
 
-    if [[ -z "$name" ]]; then
-        tmux
-        return
-    fi
+  if [[ -z "$name" ]]; then
+    tmux
+    return
+  fi
 
-    if tmux has-session -t "$name" 2>/dev/null; then
-        if [[ -n "$TMUX" ]]; then
-            tmux switch-client -t "$name"
-        else
-            tmux attach-session -t "$name"
-        fi
+  if tmux has-session -t "$name" 2>/dev/null; then
+    if [[ -n "$TMUX" ]]; then
+      tmux switch-client -t "$name"
     else
-        tmux new-session -s "$name"
+      tmux attach-session -t "$name"
     fi
+  else
+    tmux new-session -s "$name"
+  fi
 }
 
 tmxa() {
-    local session
+  local session
 
-    session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --prompt="Session > ") || return
+  session=$(
+    tmux list-sessions -F "#{session_name}" 2>/dev/null |
+      fzf --prompt="Session > "
+  ) || return
 
-    if [[ -n "$TMUX" ]]; then
-        tmux switch-client -t "$session"
-    else
-        tmux attach-session -t "$session"
-    fi
+  if [[ -n "$TMUX" ]]; then
+    tmux switch-client -t "$session"
+  else
+    tmux attach-session -t "$session"
+  fi
 }
 
 tmxk() {
-    local session
+  local session
 
-    session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | \
-        fzf --prompt="Kill session > ") || return
+  session=$(
+    tmux list-sessions -F "#{session_name}" 2>/dev/null |
+      fzf --prompt="Kill session > "
+  ) || return
 
-    tmux kill-session -t "$session"
+  tmux kill-session -t "$session"
 
-    print "✓ Killed $session"
+  print "✓ Killed $session"
 }
 
 tmxr() {
-    local dir="$HOME/.local/share/tmux/resurrect"
-    local snapshot
+  local dir="$HOME/.local/share/tmux/resurrect"
+  local snapshot
 
-    snapshot=$(
-        cd "$dir" || exit
-        find . -maxdepth 1 -type f -name '*.txt' ! -name 'last' |
-        sed 's|^\./||' |
-        sort -r |
-        fzf \
-            --prompt="Restore snapshot > " \
-            --preview '
-                echo "=== Sessions ==="
-                grep "^session" "'$dir'"/{} | cut -d" " -f2
+  snapshot=$(
+    cd "$dir" || exit
 
-                echo
-                echo "=== Windows ==="
-                grep "^window" "'$dir'"/{} | cut -d" " -f3 | sort -u
-            ' \
-            --preview-window=right:50%
-    ) || return
+    find . -maxdepth 1 -type f -name '*.txt' ! -name 'last' |
+      sed 's|^\./||' |
+      sort -r |
+      fzf \
+        --prompt="Restore snapshot > " \
+        --preview '
+          echo "=== Sessions ==="
+          grep "^session" "'$dir'"/{} | cut -d" " -f2
 
-    cp "$dir/$snapshot" "$dir/last"
+          echo
+          echo "=== Windows ==="
+          grep "^window" "'$dir'"/{} | cut -d" " -f3 | sort -u
+        ' \
+        --preview-window=right:50%
+  ) || return
 
-    if ! tmux info >/dev/null 2>&1; then
-        tmux new-session -d
-    fi
+  cp "$dir/$snapshot" "$dir/last"
 
-    ~/.tmux/plugins/tmux-resurrect/scripts/restore.sh
+  if ! tmux info >/dev/null 2>&1; then
+    tmux new-session -d
+  fi
+
+  ~/.tmux/plugins/tmux-resurrect/scripts/restore.sh
 }
+
+# ==============================================================================
+# Development Environment
+# ==============================================================================
 
 dev() {
-    local name
+  local name
 
-    read "name?Project name: "
-    [[ -z "$name" ]] && return
+  read "name?Project name: "
+  [[ -z "$name" ]] && return
 
-    # Attach if it already exists
-    if tmux has-session -t "$name" 2>/dev/null; then
-        if [[ -n "$TMUX" ]]; then
-            tmux switch-client -t "$name"
-        else
-            tmux attach-session -t "$name"
-        fi
-        return
-    fi
-
-    # Create session in the current directory
-    tmux new-session -d -s "$name" -c "$PWD"
-
-    # Window 1: Editor
-    tmux rename-window -t "$name:1" "editor"
-    tmux send-keys -t "$name:1" "nvim" C-m
-
-    # Window 2: AI
-    tmux new-window -t "$name" -n "ai" -c "$PWD"
-    tmux send-keys -t "$name:2" "opencode" C-m
-
-    # Window 3: Terminal
-    tmux new-window -t "$name" -n "term" -c "$PWD"
-
-    # Return to editor
-    tmux select-window -t "$name:1"
-
-    # Attach/switch
+  if tmux has-session -t "$name" 2>/dev/null; then
     if [[ -n "$TMUX" ]]; then
-        tmux switch-client -t "$name"
+      tmux switch-client -t "$name"
     else
-        tmux attach-session -t "$name"
+      tmux attach-session -t "$name"
     fi
+    return
+  fi
+
+  # Create session in current directory
+  tmux new-session -d -s "$name" -c "$PWD"
+
+  # Window 1: Editor
+  tmux rename-window -t "$name:1" "editor"
+  tmux send-keys -t "$name:1" "nvim" C-m
+
+  # Window 2: AI
+  tmux new-window -t "$name" -n "ai" -c "$PWD"
+  tmux send-keys -t "$name:2" "opencode" C-m
+
+  # Window 3: Terminal
+  tmux new-window -t "$name" -n "term" -c "$PWD"
+
+  # Return to editor
+  tmux select-window -t "$name:1"
+
+  # Attach / switch
+  if [[ -n "$TMUX" ]]; then
+    tmux switch-client -t "$name"
+  else
+    tmux attach-session -t "$name"
+  fi
 }
-
-
-# kilo
-export PATH=/home/vaproh/.kilo/bin:$PATH

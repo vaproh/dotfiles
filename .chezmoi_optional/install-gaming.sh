@@ -15,8 +15,6 @@ PACMAN=(
     steam
     mangohud
     goverlay
-    vkbasalt
-    vkbasalt-cli
     gamescope
     vkd3d
     lib32-vkd3d
@@ -31,7 +29,8 @@ PACMAN=(
 AUR=(
     dxvk-bin
     protonup-qt-bin
-    protontricks-bin
+    vkbasalt
+    vkbasalt-cli
 )
 
 install_pacman "${PACMAN[@]}"
