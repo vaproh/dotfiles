@@ -1,0 +1,9 @@
+# Extend the built-in rules and only silence the vendored Cloudflare
+# agent-skill docs, which quote placeholder credentials in examples
+# (YOUR_API_TOKEN, sk_live_abc123). Everything else is still scanned.
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Vendored third-party reference docs with sample credentials"
+paths = ['''^dot_config/opencode/skills/''']
