@@ -131,29 +131,24 @@ fi
 divider
 
 # --------------------------------------------------
-# Oh My Zsh
+# Zsh Plugins
 # --------------------------------------------------
 
-section "Oh My Zsh"
+section "Zsh Plugins"
 
-CUSTOM="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
-
-check "Oh My Zsh" test -d "$HOME/.oh-my-zsh"
+PLUGINS_DIR="$HOME/.zsh/plugins"
 
 check "Autosuggestions" \
-    test -d "$CUSTOM/plugins/zsh-autosuggestions"
+    test -d "$PLUGINS_DIR/zsh-autosuggestions"
 
 check "Syntax Highlighting" \
-    test -d "$CUSTOM/plugins/zsh-syntax-highlighting"
+    test -d "$PLUGINS_DIR/zsh-syntax-highlighting"
 
 check "fzf-tab" \
-    test -d "$CUSTOM/plugins/fzf-tab"
-
-check "zsh-completions" \
-    test -d "$CUSTOM/plugins/zsh-completions"
+    test -d "$PLUGINS_DIR/fzf-tab"
 
 check "you-should-use" \
-    test -d "$CUSTOM/plugins/you-should-use"
+    test -d "$PLUGINS_DIR/you-should-use"
 
 divider
 

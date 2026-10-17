@@ -7,7 +7,7 @@ Primary setup: **Niri** (scrollable-tiling compositor) + **Noctalia** shell. A *
 ## What's Included
 
 - **Window Manager**: Niri + Noctalia (primary); Hyprland + Waybar + Wofi + SwayNC + Hypridle (also included)
-- **Terminal**: Kitty + Zsh + Oh My Zsh + Starship
+- **Terminal**: Kitty + Zsh (with plugins) + Starship
 - **Editor**: Neovim (AstroNvim)
 - **File Manager**: Dolphin + Yazi
 - **Shell Tools**: fzf, zoxide, bat, eza, fd, ripgrep, jq
@@ -52,7 +52,7 @@ chezmoi will clone this repository and execute scripts in order:
 | 0 | `run_once_00-install-yay.sh` | Install yay (AUR helper) |
 | 1 | `run_once_01-install-packages.sh` | Install all packages (~138 packages) |
 | 2 | `run_once_02-install-fonts.sh` | Install fonts (~20 packages) |
-| 3 | `run_once_03-install-ohmyzsh.sh` | Install Oh My Zsh + plugins |
+| 3 | `run_once_03-install-zsh-plugins.sh` | Install Zsh plugins |
 | 4 | `run_once_04-enable-services.sh` | Enable services (NetworkManager, PipeWire, WirePlumber) |
 | 5 | `run_once_05-install-yazi-plugins.sh` | Install Yazi plugins |
 | 6 | `run_once_06-optional.sh` | Interactive menu for optional components |
@@ -91,7 +91,7 @@ bash .chezmoiscripts/run_once_06-optional.sh
 │   ├── run_once_00-install-yay.sh
 │   ├── run_once_01-install-packages.sh
 │   ├── run_once_02-install-fonts.sh
-│   ├── run_once_03-install-ohmyzsh.sh
+│   ├── run_once_03-install-zsh-plugins.sh
 │   ├── run_once_04-enable-services.sh
 │   ├── run_once_05-install-yazi-plugins.sh
 │   ├── run_once_06-optional.sh
@@ -173,7 +173,7 @@ This will check:
 - Core programs (yay, chezmoi, git, zsh, tmux, kitty, Niri, Noctalia, Hyprland, Waybar, Neovim, Yazi)
 - Fonts (Inter, Maple Mono, Libertinus Serif, Noto Sans)
 - Services (NetworkManager, Bluetooth, MPD)
-- Oh My Zsh and plugins
+- Zsh plugins
 - Configuration files
 - Optional software
 - GPU information
