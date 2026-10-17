@@ -9,7 +9,7 @@ Arch Linux + Hyprland (Wayland) configuration managed with [chezmoi](https://www
 - **Editor**: Neovim (AstroNvim) + Crush (AI coding agent)
 - **File Manager**: Dolphin + Yazi
 - **Shell Tools**: fzf, zoxide, bat, eza, fd, ripgrep, jq
-- **AI Tools**: opencode, crush, rtk (with MCP servers: Context7, Exa, Fetch, OpenAPI)
+- **AI Tools**: opencode, crush, rtk (with MCP servers: Context7, Exa, Playwright, GitHub)
 - **Fonts**: Inter, Iosevka, JetBrains Mono, Maple Mono, Nerd Fonts, Emoji
 - **Appearance**: Papirus icons, Materia theme, Kvantum, Pywal
 - **Templates**: `dot_example_zshenv` - API key template for AI tools
@@ -127,7 +127,7 @@ bash .chezmoiscripts/run_once_06-optional.sh
 │   ├── rofi/                  # App launcher config + themes
 │   ├── swaync/                # Notification center themes
 │   ├── sxhkd/                 # Hotkey daemon (bspwm/dwm configs)
-│   ├── opencode/              # OpenCode AI agent config (MCP: Context7, Exa, OpenAPI, Fetch)
+│   ├── opencode/              # opencode.jsonc, cli.json, dcp.jsonc, plugins/ (MCP: Context7, Exa, Playwright, GitHub)
 │   ├── crush/                 # Crush AI agent config (MCP: Context7, Exa, Fetch)
 │   ├── gtk-4.0/               # GTK4 theming
 │   ├── kdeglobals/            # KDE globals
@@ -193,7 +193,7 @@ Located in `~/.local/bin/`:
 
 | Tool | Config | MCP Servers |
 |------|--------|-------------|
-| **opencode** | `~/.config/opencode/opencode.jsonc` | Context7, Exa, OpenAPI, Fetch |
+| **opencode** | `~/.config/opencode/` (`opencode.jsonc`, `cli.json`, `dcp.jsonc`, `plugins/rtk.ts`) | Context7, Exa, Playwright, GitHub |
 | **crush** | `~/.config/crush/crush.json` | Context7, Exa, Fetch |
 | **rtk** | CLI proxy (AUR) | Reduces LLM token consumption |
 
