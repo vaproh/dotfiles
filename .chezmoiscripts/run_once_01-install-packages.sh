@@ -32,7 +32,6 @@ PACMAN_PACKAGES=(
     xdg-desktop-portal-gtk
     xdg-desktop-portal-gnome
     xdg-utils
-    xwaylandvideobridge
 
     brightnessctl
     udiskie
@@ -47,12 +46,9 @@ PACMAN_PACKAGES=(
     waybar
 
     wofi
-    wofi-calc
 
     swaync
     libnotify
-
-    wlogout
 
     # --------------------------------------------------
     # Terminal
@@ -118,7 +114,6 @@ PACMAN_PACKAGES=(
     mpv
     obs-studio
 
-    swww
     satty
     grim
     slurp
@@ -170,7 +165,6 @@ PACMAN_PACKAGES=(
     qt5-wayland
     qt6-wayland
     kvantum
-    qgnomeplatform-qt6
     nwg-look
 
     # --------------------------------------------------
@@ -179,7 +173,6 @@ PACMAN_PACKAGES=(
 
     discord
     telegram-desktop
-    spotify
 
     qbittorrent
 
@@ -252,10 +245,18 @@ PACMAN_PACKAGES=(
 AUR_PACKAGES=(
 
     # --------------------------------------------------
-    # Bar
+    # Wayland
+    # --------------------------------------------------
+
+    xwaylandvideobridge
+
+    # --------------------------------------------------
+    # Bar / Launcher
     # --------------------------------------------------
 
     wttrbar-bin
+    wlogout
+    wofi-calc
 
     # --------------------------------------------------
     # Utilities
@@ -270,10 +271,9 @@ AUR_PACKAGES=(
     # Appearance
     # --------------------------------------------------
 
-    tela-circle-icon-theme
     whitesur-icon-theme
-    candy-icons
     materia-gtk-theme
+    qgnomeplatform-qt6
 
     python-pywal16
 
@@ -283,6 +283,7 @@ AUR_PACKAGES=(
 
     brave-origin-bin
     zen-browser-bin
+    spotify
 
     # --------------------------------------------------
     # Video
@@ -296,7 +297,7 @@ section "Installing Official Packages"
 
 install_pacman "${PACMAN_PACKAGES[@]}"
 
-if gum confirmation --default=true "Install AUR packages?"; then
+if gum confirm --default=true "Install AUR packages?"; then
     section "Selecting AUR Packages"
 
     if command -v gum &>/dev/null; then

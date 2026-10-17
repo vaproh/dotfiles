@@ -22,15 +22,8 @@ PACMAN_PACKAGES=(
     rust-src
     opencode
 
-    # C / C++ toolchain (LLVM; clang also provides clangd)
-    clang
-    lld
-    lldb
-    llvm
-    compiler-rt
+    # C / C++ build tools
     cmake
-    ninja
-    ccache
     gdb
 )
 
@@ -48,7 +41,7 @@ if command_exists rustup; then
 fi
 
 if [[ ${#AUR_PACKAGES[@]} -gt 0 ]]; then
-    if gum confirmation --default=false "Install AUR packages?"; then
+    if gum confirm --default=false "Install AUR packages?"; then
         install_aur "${AUR_PACKAGES[@]}"
     fi
 fi

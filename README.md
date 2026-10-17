@@ -69,7 +69,7 @@ During initial setup, `run_once_06-optional.sh` will prompt you to install optio
 chezmoi cd
 bash .chezmoi_optional/install-gaming.sh      # Steam, Proton, Wine, MangoHud
 bash .chezmoi_optional/install-laptop.sh      # Power management, Bluetooth
-bash .chezmoi_optional/install-development.sh # GitHub CLI, Lazygit, Node, Go, Rust (rustup), C/C++ (clang, lld, lldb), OpenCode, rtk
+bash .chezmoi_optional/install-development.sh # GitHub CLI, Lazygit, Node, Go, Rust (rustup), C/C++ build tools, OpenCode, rtk
 bash .chezmoi_optional/install-docker.sh      # Docker with service setup
 bash .chezmoi_optional/install-nvim.sh        # Clone Neovim config
 bash .chezmoi_optional/install-sddm-theme.sh  # SDDM astronaut theme (10 variants)
