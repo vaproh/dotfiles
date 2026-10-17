@@ -1,0 +1,47 @@
+[theme]
+mode = "dark"
+
+[shell]
+polkit_agent = true
+avatar_path = "~/Pictures/avatar.png"
+clipboard_enabled = false
+
+[shell.screenshot]
+save_to_file = true
+directory = ""
+copy_to_clipboard = true
+freeze_screen = true
+
+[idle]
+behavior_order = ["lock", "screen-off", "suspend"]
+
+[idle.behavior.lock]
+timeout = 300
+action = "lock"
+enabled = true
+
+[idle.behavior.screen-off]
+timeout = 330
+action = "screen_off"
+enabled = true
+
+[idle.behavior.suspend]
+timeout = 900
+action = "lock_and_suspend"
+enabled = true
+
+[widget.network]
+show_label = false
+
+[widget.workspaces]
+hide_when_empty = true
+
+[notification.filter.cider_app]
+enabled = true
+match = "cider"
+show_toast = false
+play_sound = false
+save_history = false
+
+[osd.kinds]
+media = false

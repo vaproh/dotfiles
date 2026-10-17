@@ -1,0 +1,10 @@
+workspace "ter" {}
+workspace "cod" {}
+workspace "www" {}
+workspace "sof" {}
+workspace "util" {}
+workspace "vid" {}
+workspace "mus" {}
+workspace "chat" {}
+workspace "soc" {}
+workspace "idk" {}

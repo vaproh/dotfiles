@@ -1,0 +1,10 @@
+include "categories/output.kdl"
+include "categories/workspaces.kdl"
+include "categories/input.kdl"
+include "categories/appearance.kdl"
+include "categories/keybinds.kdl"
+include "categories/window-rules.kdl"
+include "categories/autostart.kdl"
+include "categories/debug.kdl"
+
+include "noctalia.kdl"
