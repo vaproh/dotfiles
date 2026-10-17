@@ -1,0 +1,12 @@
+# Extend the built-in rules and only silence the vendored Cloudflare
+# agent-skill docs, which quote placeholder credentials in examples
+# (YOUR_API_TOKEN, sk_live_abc123). Everything else is still scanned.
+[extend]
+useDefault = true
+
+# Singular key on purpose: gitleaks-action v3 installs gitleaks 8.24.3, which
+# does not read the newer [[allowlists]] form, so the scheduled full-history
+# scan would fail on the vendored docs.
+[allowlist]
+description = "Vendored third-party reference docs with sample credentials"
+paths = ['''^dot_config/opencode/skills/''']
