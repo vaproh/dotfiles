@@ -1,133 +1,151 @@
 {
   "$schema": "https://opencode.ai/config.json",
-
-  "provider": {
-    "openrouter": {
-      "models": {
-        "deepseek/deepseek-v4-flash": {
-          "options": {
-            "provider": {
-              "only": ["baidu/fp8"],
-            },
-          },
-        },
-      },
-    },
-  },
-
-  "plugin": [
-    "@dietrichgebert/ponytail@4.9.0",
-    "@tarquinen/opencode-dcp@3.1.14",
-    "@maestria/opencode@0.6.18",
-    "opencode-session-recall@2.0.0",
-    [
-      "@knikolov/opencode-plugin-simple-memory@1.1.1",
-      {
+  "plugins": [
+    "@tarquinen/opencode-dcp@3.2.0",
+    "@dietrichgebert/ponytail@5.3.2",
+    "opencode-skills-collection@4.1.18",
+    "@maestria/opencode@0.11.0",
+    {
+      "package": "@knikolov/opencode-plugin-simple-memory@2.0.0",
+      "options": {
         "autoLoad": true,
         "autoSave": true,
         "contextLimit": 3,
-        "contextMaxChars": 800
-      }
-    ]
+        "contextMaxChars": 800,
+      },
+    },
   ],
-
-  "autoupdate": false,
-
+  "update": "disable",
   "watcher": {
-    "ignore": ["node_modules/**", "dist/**", ".git/**", ".venv/**", "__pycache__/**", ".svelte-kit/**"]
+    "ignore": [
+      "node_modules/**",
+      "dist/**",
+      ".git/**",
+      ".venv/**",
+      "__pycache__/**",
+      ".svelte-kit/**",
+    ],
   },
-
   "compaction": {
-    "prune": true,
-    "tail_turns": 1,
-    "reserved": 20000
+    "buffer": 20000,
   },
-
   "tool_output": {
     "max_lines": 1000,
-    "max_bytes": 25000
+    "max_bytes": 25000,
   },
-
-  "agent": {
+  "agents": {
     "explore": {
-      "tools": {
-        "skill": false
-      }
+      "permissions": [
+        {
+          "action": "skill",
+          "resource": "*",
+          "effect": "deny",
+        },
+      ],
     },
     "orchestrator": {
-      "model": "opencode-go/deepseek-v4-flash",
       "color": "#FFB020",
-      "permission": {
-        "context7_*": "allow",
-        "exa_*": "allow",
-        "playwright_*": "deny"
-      }
+      "permissions": [
+        {
+          "action": "context7_*",
+          "resource": "*",
+          "effect": "allow",
+        },
+        {
+          "action": "exa_*",
+          "resource": "*",
+          "effect": "allow",
+        },
+        {
+          "action": "playwright_*",
+          "resource": "*",
+          "effect": "deny",
+        },
+      ],
     },
-    "adventurer": { "model": "opencode-go/deepseek-v4-flash" },
-    "builder": { "model": "opencode-go/deepseek-v4-flash" },
-    "diagnose": { "model": "opencode-go/deepseek-v4-flash" },
-    "writer": { "model": "opencode-go/deepseek-v4-flash" },
-    "planner": { "model": "opencode-go/deepseek-v4-flash" },
-    "architect": { "model": "opencode-go/deepseek-v4-flash" },
-    "reviewer": { "model": "opencode-go/deepseek-v4-flash" }
   },
-
   "lsp": {
     "basedpyright": {
-      "command": ["basedpyright-langserver", "--stdio"],
-      "extensions": [".py"],
+      "command": [
+        "basedpyright-langserver",
+        "--stdio"
+      ],
+      "extensions": [
+        ".py"
+      ],
       "priority": 100,
     },
-
     "ruff": {
-      "command": ["ruff", "server"],
-      "extensions": [".py"],
+      "command": [
+        "ruff",
+        "server"
+      ],
+      "extensions": [
+        ".py"
+      ],
       "priority": 90,
     },
-
     "pyright": {
       "disabled": true,
     },
   },
-
   "mcp": {
-    "context7": {
-      "type": "remote",
-      "url": "https://mcp.context7.com/mcp",
-      "headers": {
-        "CONTEXT7-API-KEY": "{env:CONTEXT7_API_KEY}",
+    "servers": {
+      "context7": {
+        "type": "remote",
+        "url": "https://mcp.context7.com/mcp",
+        "headers": {
+          "CONTEXT7-API-KEY": "{env:CONTEXT7_API_KEY}",
+        },
+        "disabled": false,
       },
-      "enabled": true,
-    },
-
-    "exa": {
-      "type": "local",
-      "command": ["npx", "-y", "exa-mcp-server"],
-      "environment": {
-        "EXA_API_KEY": "{env:EXA_API_KEY}",
+      "exa": {
+        "type": "local",
+        "command": [
+          "npx",
+          "-y",
+          "exa-mcp-server"
+        ],
+        "environment": {
+          "EXA_API_KEY": "{env:EXA_API_KEY}",
+        },
+        "disabled": false,
       },
-      "enabled": true,
+      "playwright": {
+        "type": "local",
+        "command": [
+          "npx",
+          "-y",
+          "@playwright/mcp@latest"
+        ],
+        "disabled": false,
+      },
+      "github": {
+        "type": "local",
+        "command": [
+          "npx",
+          "-y",
+          "@modelcontextprotocol/server-github"
+        ],
+        "environment": {
+          "GITHUB_PERSONAL_ACCESS_TOKEN": "{env:GITHUB_TOKEN}",
+        },
+        "disabled": false,
+      },
+      // "blender": {
+      //   "type": "local",
+      //   "command": ["uvx", "blender-mcp"],
+      //   "disabled": false
+      // },
+      //
+      // "godot": {
+      //   "type": "local",
+      //   "command": ["npx", "-y", "godot-mcp-runtime"],
+      //   "env": {
+      //     "GODOT_PATH": "/usr/bin/godot"
+      //   },
+      //   "disabled": false
+      // },
     },
-
-    "playwright": {
-      "type": "local",
-      "command": ["npx", "-y", "@playwright/mcp@latest"],
-      "enabled": true,
-    },
-
-    // "blender": {
-    //   "type": "local",
-    //   "command": ["uvx", "blender-mcp"],
-    //   "enabled": true,
-    // },
-    //
-    // "godot": {
-    //   "type": "local",
-    //   "command": ["npx", "-y", "godot-mcp-runtime"],
-    //   "env": {
-    //     "GODOT_PATH": "/usr/bin/godot",
-    //   },
-    //   "enabled": true,
-    // },
   },
 }
