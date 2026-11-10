@@ -1,3 +1,5 @@
 export CONTEXT7_API_KEY=""
 export EXA_API_KEY=""
+export GITHUB_TOKEN=""
+export FIRECRAWL_API_KEY=""
 

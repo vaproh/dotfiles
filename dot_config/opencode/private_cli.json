@@ -25,5 +25,8 @@
   },
   "tabs": {
     "mode": "auto"
+  },
+  "mini": {
+    "thinking": "hide"
   }
 }
