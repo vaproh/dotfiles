@@ -43,7 +43,7 @@
         },
       ],
     },
-    "orchestrator": {
+    "maestria": {
       "color": "#FFB020",
       "permissions": [
         {
