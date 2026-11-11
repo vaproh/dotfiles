@@ -43,36 +43,6 @@
         },
       ],
     },
-    "maestria": {
-      "color": "#FFB020",
-      "permissions": [
-        {
-          "action": "context7_*",
-          "resource": "*",
-          "effect": "allow",
-        },
-        {
-          "action": "exa_*",
-          "resource": "*",
-          "effect": "allow",
-        },
-        {
-          "action": "playwright_*",
-          "resource": "*",
-          "effect": "deny",
-        },
-        {
-          "action": "subagent",
-          "resource": "general",
-          "effect": "allow",
-        },
-        {
-          "action": "subagent",
-          "resource": "explore",
-          "effect": "allow",
-        },
-      ],
-    },
   },
   "lsp": {
     "basedpyright": {
